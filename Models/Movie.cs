@@ -17,5 +17,8 @@ namespace MovieApi.Models
         public int Duration { get; set; }
 
         public int MovieDetailsId { get; set; }
+
+        public ICollection<Review>? Reviews { get; set; }
+
     }
 }
