@@ -13,5 +13,8 @@ namespace MovieApi.Models
         public string? Language { get; set; }
         public int Budget { get; set; }
 
+        public int MovieId { get; set; }
+        public string? MovieTitle { get; set; }
+
     }
 }
