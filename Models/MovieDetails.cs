@@ -5,15 +5,13 @@ namespace MovieApi.Models
 {
     public class MovieDetails
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string? Synopsis { get; set; }
         public string? Language { get; set; }
         public int Budget { get; set; }
 
-        public int MovieId { get; set; }
+        public int? MovieId { get; set; }
         public string? MovieTitle { get; set; }
 
     }

@@ -5,8 +5,6 @@ namespace MovieApi.Models
 {
     public class MovieActor
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public int MovieId { get; set; }

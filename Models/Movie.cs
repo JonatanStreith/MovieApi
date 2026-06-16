@@ -5,12 +5,7 @@ namespace MovieApi.Models
 {
     public class Movie
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        [Required]
-        [MaxLength(50)]
         public string? Title { get; set; }
         public int Year {  get; set; }
         public string? Genre { get; set; }
