@@ -13,5 +13,7 @@ namespace MovieApi.Models
         [MaxLength(50)]
         public string? Name { get; set; }
         public int BirthYear { get; set; }
+
+        public ICollection<MovieActor> MovieActor {  get; set; }
     }
 }

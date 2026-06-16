@@ -20,5 +20,8 @@ namespace MovieApi.Models
 
         public ICollection<Review>? Reviews { get; set; }
 
+        public ICollection<MovieActor> MovieActor { get; set; }
+
+
     }
 }
