@@ -1,10 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 public class MovieApiContext(DbContextOptions<MovieApiContext> options) : DbContext(options)
 {
-    public DbSet<MovieApi.Models.Movie> Movie { get; set; } = default!;
+    public DbSet<MovieApi.Models.Movie> Movies { get; set; } = default!;
     public DbSet<MovieApi.Models.MovieDetails> MovieDetails { get; set; } = default!;
-    public DbSet<MovieApi.Models.Review> Review { get; set; } = default!;
-    public DbSet<MovieApi.Models.MovieActor> MovieActor { get; set; } = default!;
+    public DbSet<MovieApi.Models.Review> Reviews { get; set; } = default!;
+    public DbSet<MovieApi.Models.MovieActor> MovieActors { get; set; } = default!;
 
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+    }
 }
