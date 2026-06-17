@@ -8,7 +8,7 @@ namespace MovieApi.Configurations
     {
         public void Configure(EntityTypeBuilder<Review> builder)
         {
-            builder.HasOne<Review>().WithMany().HasForeignKey(r => r.MovieId);
+            builder.HasOne<Movie>().WithMany().HasForeignKey(r => r.MovieId);
 
             builder.HasKey(r => r.Id);
             builder.Property(r => r.ReviewerName)
@@ -45,7 +45,7 @@ namespace MovieApi.Configurations
                 },
                 new Review()
                 {
-                    Id = 1,
+                    Id = 2,
                     ReviewerName = "Snooty McNitpick",
                     Rating = 1,
                     Comment = "A distasteful look into the horrifying military complex. Also, Marvel just keeps pumping these out. This is, what, the fifth one in the series?",
@@ -54,7 +54,7 @@ namespace MovieApi.Configurations
                 },
                 new Review()
                 {
-                    Id = 1,
+                    Id = 3,
                     ReviewerName = "StarkLovr4908",
                     Rating = 5,
                     Comment = "Tony looks so hot in this one. Shame about the ending. I wrote a fanfic that fixed everything, read it at http://wwwfanfic.con/340694hgio/a/",
@@ -63,7 +63,7 @@ namespace MovieApi.Configurations
                 },
                 new Review()
                 {
-                    Id = 1,
+                    Id = 4,
                     ReviewerName = "Doug Spoilerton",
                     Rating = 5,
                     Comment = "A fascinating adaptation of long-running comics continuity adapted into film. A shame TONY DIES IN ENDGAME!",
@@ -72,7 +72,7 @@ namespace MovieApi.Configurations
                 },
                 new Review()
                 {
-                    Id = 1,
+                    Id = 5,
                     ReviewerName = "Richard Normalman",
                     Rating = 4,
                     Comment = "Are all these reviews made up? Whatever. I liked the movie.",
