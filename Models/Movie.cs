@@ -13,9 +13,9 @@ namespace MovieApi.Models
 
         public int MovieDetailsId { get; set; }
 
-        public ICollection<Review>? Reviews { get; set; }
+        //public ICollection<Review>? Reviews { get; set; }
 
-        public ICollection<MovieActor> MovieActor { get; set; }
+        //public ICollection<MovieActor> MovieActor { get; set; }
 
 
     }

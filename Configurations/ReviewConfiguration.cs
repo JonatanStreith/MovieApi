@@ -8,7 +8,9 @@ namespace MovieApi.Configurations
     {
         public void Configure(EntityTypeBuilder<Review> builder)
         {
-            builder.HasOne<Movie>().WithMany().HasForeignKey(r => r.MovieId);
+            builder.HasOne<Movie>()
+                .WithMany(/*m => m.Reviews*/)
+                .HasForeignKey(r => r.MovieId);
 
             builder.HasKey(r => r.Id);
             builder.Property(r => r.ReviewerName)

@@ -9,11 +9,11 @@ namespace MovieApi.Configurations
         public void Configure(EntityTypeBuilder<MovieActor> builder)
         {
             builder.HasOne<Movie>()
-                    .WithMany()
+                    .WithMany(/*m => m.MovieActor*/)
                     .HasForeignKey(ma => ma.MovieId);
 
             builder.HasOne<Actor>()
-                    .WithMany()
+                    .WithMany(/*m => m.MovieActor*/)
                     .HasForeignKey(ma => ma.ActorId);
 
             builder.HasKey(ma => ma.Id);
