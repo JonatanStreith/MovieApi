@@ -9,6 +9,7 @@ namespace MovieApi.Configurations
         public void Configure(EntityTypeBuilder<Actor> builder)
         {
 
+
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Name)
                     .IsRequired()

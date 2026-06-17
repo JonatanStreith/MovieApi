@@ -8,10 +8,9 @@ namespace MovieApi.Models
         public int Id { get; set; }
 
         public int MovieId { get; set; }
-        public string? Title { get; set; }
         public int ActorId { get; set; }
-        public string? Name { get; set; }
-
+        //public Movie Movie { get; set; }
+        //public Actor Actor { get; set; }
 
     }
 }

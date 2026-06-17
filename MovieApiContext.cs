@@ -7,7 +7,6 @@ public class MovieApiContext(DbContextOptions<MovieApiContext> options) : DbCont
     public DbSet<MovieApi.Models.MovieDetails> Details { get; set; } = default!;
     public DbSet<MovieApi.Models.Review> Reviews { get; set; } = default!;
     public DbSet<MovieApi.Models.MovieActor> MovieActors { get; set; } = default!;
-
     public DbSet<MovieApi.Models.Actor> Actors { get; set; } = default!;
 
 

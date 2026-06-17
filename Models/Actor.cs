@@ -10,6 +10,6 @@ namespace MovieApi.Models
         public string? Name { get; set; }
         public int BirthYear { get; set; }
 
-        //public ICollection<MovieActor> MovieActor {  get; set; }
+        public ICollection<MovieActor> MovieActor {  get; set; }
     }
 }
