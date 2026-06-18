@@ -1,5 +1,7 @@
 ﻿using MovieApi.Dtos;
 using MovieApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieApi.Repositories
 {
@@ -13,34 +15,48 @@ namespace MovieApi.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task AddMovieAsync(MovieCreateDto movie)
+
+
+
+        public async Task<IEnumerable<Movie>> GetMoviesAsync()
+        {
+
+            return await _context.Movies.OrderBy(m => m.Id).ToListAsync();
+
+        }
+
+        public async Task<Movie?> GetMovieAsync(int id)
+        {
+            return await _context.Movies.FindAsync(id);
+        }
+            //var movie = await _context.Movies.FindAsync(id);
+
+            //if (movie == null) return null;
+
+            //MovieDto movieWithDetails = new MovieDto()
+            //{
+            //    MovieId = movie.Id,
+
+            //};
+        public async Task<MovieDetails> GetMovieDetailsAsync(int id)
+        {
+            return await _context.Details.FindAsync(id);
+        }
+
+        public async Task AddMovieAsync(MovieCreateDto movie)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteMovieAsync(int id)
+        public async Task UpdateMovieAsync(MovieUpdateDto movie)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Movie?> GetMovieAsync()
+        public async Task DeleteMovieAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<MovieDetails> GetMovieDetailsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Movie>> GetMoviesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateMovieAsync(MovieUpdateDto movie)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

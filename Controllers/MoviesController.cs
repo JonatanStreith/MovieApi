@@ -1,39 +1,57 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Models;
+using MovieApi.Repositories;
 
-[Route("api/[controller]")]
+[Route("api/movies")]
 [ApiController]
 public class MoviesController : ControllerBase
 {
     private readonly MovieApiContext _context;
-    public MoviesController(MovieApiContext context)
+    private readonly IMovieRepository _movieRepository;
+    public MoviesController(IMovieRepository movieRepository)
     {
-        _context = context;
+        _movieRepository = movieRepository ??
+                throw new ArgumentNullException(nameof(movieRepository)); ;
     }
 
-    // GET: api/Movie
+    // GET: api/movies
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
+    public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
     {
-        return await _context.Movies.ToListAsync();
+        var movies = _movieRepository.GetMoviesAsync();
+        return Ok(movies);
     }
 
-    // GET: api/Movie/5
+    // GET: api/movies/1
     [HttpGet("{id}")]
     public async Task<ActionResult<Movie>> GetMovie(int id)
     {
-        var movie = await _context.Movies.FindAsync(id);
+        var movie = await _movieRepository.GetMovieAsync(id);
 
         if (movie == null)
         {
             return NotFound($"The movie with the id {id} couldn't be found.");
         }
 
-        return movie;
+        return Ok(movie);
     }
 
-    // PUT: api/Movie/5
+    // GET /api/movies/{id}/details
+    [HttpGet("{id}/details")]
+    public async Task<ActionResult<Movie>> GetMovieDetails(int id)
+    {
+        var movieDetails = await _movieRepository.GetMovieDetailsAsync(id);
+
+        if (movieDetails == null)
+        {
+            return NotFound($"The movie with the id {id} couldn't be found.");
+        }
+
+        return Ok(movieDetails);
+    }
+
+    // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
     public async Task<IActionResult> PutMovie(int? id, Movie movie)
@@ -64,7 +82,7 @@ public class MoviesController : ControllerBase
         return NoContent();
     }
 
-    // POST: api/Movie
+    // POST: api/movies
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
     public async Task<ActionResult<Movie>> PostMovie(Movie movie)
@@ -75,7 +93,7 @@ public class MoviesController : ControllerBase
         return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
     }
 
-    // DELETE: api/Movie/5
+    // DELETE: api/movies/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMovie(int? id)
     {

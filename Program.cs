@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MovieApi.Repositories;
 
 namespace MovieApi
 {
@@ -12,6 +13,9 @@ namespace MovieApi
             builder.Services.AddDbContext<MovieApiContext>(options => options.UseSqlServer(connectionString));
 
             // Add services to the container.
+
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
