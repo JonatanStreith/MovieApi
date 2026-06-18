@@ -12,5 +12,7 @@ namespace MovieApi.Dtos
         public string? Genre { get; set; }
         public int Duration { get; set; }
 
+        public MovieDetailDto Details { get; set; }
+
     }
 }
