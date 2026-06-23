@@ -108,6 +108,11 @@ namespace MovieApi.Repositories
             return (details, reviews, actors);
         }
 
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() >= 0);
+        }
+
         public ReviewDto ConvertReviewToDto(Review review)
         {
             return new ReviewDto()
