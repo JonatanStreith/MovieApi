@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MovieApi.Dtos;
 using MovieApi.Models;
 using MovieApi.Repositories;
 
@@ -23,11 +24,11 @@ public class MoviesController : ControllerBase
         return Ok(movies);
     }
 
-    // GET: api/movies/1
+    // GET: api/movies/1?fulldata=true
     [HttpGet("{id}")]
-    public async Task<ActionResult<Movie>> GetMovie(int id)
+    public async Task<ActionResult<MovieDto>> GetMovie(int id, bool fullData = false)
     {
-        var movie = await _movieRepository.GetMovieAsync(id);
+        var movie = await _movieRepository.GetMovieAsync(id, fullData);
 
         if (movie == null)
         {
@@ -54,12 +55,8 @@ public class MoviesController : ControllerBase
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutMovie(int? id, Movie movie)
+    public async Task<IActionResult> PutMovie(int? id, MovieUpdateDto movie)
     {
-        if (id != movie.Id)
-        {
-            return BadRequest();
-        }
 
         _context.Entry(movie).State = EntityState.Modified;
 

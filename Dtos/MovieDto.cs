@@ -14,5 +14,7 @@ namespace MovieApi.Dtos
 
         public MovieDetailDto Details { get; set; }
 
+
+
     }
 }
