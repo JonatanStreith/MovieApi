@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MovieApi.Migrations
 {
     [DbContext(typeof(MovieApiContext))]
-    [Migration("20260617125106_Latest")]
-    partial class Latest
+    [Migration("20260623130824_refactored")]
+    partial class refactored
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,11 +25,11 @@ namespace MovieApi.Migrations
 
             modelBuilder.Entity("MovieApi.Models.Actor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ActorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActorId"));
 
                     b.Property<int>("BirthYear")
                         .HasColumnType("int");
@@ -39,38 +39,38 @@ namespace MovieApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar");
 
-                    b.HasKey("Id");
+                    b.HasKey("ActorId");
 
                     b.ToTable("Actors");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            ActorId = 1,
                             BirthYear = 1965,
                             Name = "Robert Downey Jr."
                         },
                         new
                         {
-                            Id = 2,
+                            ActorId = 2,
                             BirthYear = 1972,
                             Name = "Gwyneth Paltrow"
                         },
                         new
                         {
-                            Id = 3,
+                            ActorId = 3,
                             BirthYear = 1969,
                             Name = "Terrence Howard"
                         },
                         new
                         {
-                            Id = 4,
+                            ActorId = 4,
                             BirthYear = 1952,
                             Name = "Mickey Rourke"
                         },
                         new
                         {
-                            Id = 5,
+                            ActorId = 5,
                             BirthYear = 1967,
                             Name = "Guy Pearce"
                         });
@@ -78,11 +78,11 @@ namespace MovieApi.Migrations
 
             modelBuilder.Entity("MovieApi.Models.Movie", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
@@ -90,9 +90,6 @@ namespace MovieApi.Migrations
                     b.Property<string>("Genre")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar");
-
-                    b.Property<int>("MovieDetailsId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -102,38 +99,32 @@ namespace MovieApi.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieDetailsId")
-                        .IsUnique();
+                    b.HasKey("MovieId");
 
                     b.ToTable("Movies");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            MovieId = 1,
                             Duration = 126,
                             Genre = "Action",
-                            MovieDetailsId = 1,
                             Title = "Iron Man 1",
                             Year = 2008
                         },
                         new
                         {
-                            Id = 2,
+                            MovieId = 2,
                             Duration = 124,
                             Genre = "Action",
-                            MovieDetailsId = 2,
                             Title = "Iron Man 2",
                             Year = 2010
                         },
                         new
                         {
-                            Id = 3,
+                            MovieId = 3,
                             Duration = 130,
                             Genre = "Action",
-                            MovieDetailsId = 3,
                             Title = "Iron Man 3",
                             Year = 2013
                         });
@@ -141,11 +132,11 @@ namespace MovieApi.Migrations
 
             modelBuilder.Entity("MovieApi.Models.MovieActor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieActorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieActorId"));
 
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
@@ -153,7 +144,7 @@ namespace MovieApi.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieActorId");
 
                     b.HasIndex("ActorId");
 
@@ -164,55 +155,55 @@ namespace MovieApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            MovieActorId = 1,
                             ActorId = 1,
                             MovieId = 1
                         },
                         new
                         {
-                            Id = 2,
+                            MovieActorId = 2,
                             ActorId = 2,
                             MovieId = 1
                         },
                         new
                         {
-                            Id = 3,
+                            MovieActorId = 3,
                             ActorId = 3,
                             MovieId = 1
                         },
                         new
                         {
-                            Id = 4,
+                            MovieActorId = 4,
                             ActorId = 1,
                             MovieId = 2
                         },
                         new
                         {
-                            Id = 5,
+                            MovieActorId = 5,
                             ActorId = 2,
                             MovieId = 2
                         },
                         new
                         {
-                            Id = 6,
+                            MovieActorId = 6,
                             ActorId = 4,
                             MovieId = 2
                         },
                         new
                         {
-                            Id = 7,
+                            MovieActorId = 7,
                             ActorId = 1,
                             MovieId = 3
                         },
                         new
                         {
-                            Id = 8,
+                            MovieActorId = 8,
                             ActorId = 2,
                             MovieId = 3
                         },
                         new
                         {
-                            Id = 9,
+                            MovieActorId = 9,
                             ActorId = 5,
                             MovieId = 3
                         });
@@ -220,11 +211,11 @@ namespace MovieApi.Migrations
 
             modelBuilder.Entity("MovieApi.Models.MovieDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieDetailsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieDetailsId"));
 
                     b.Property<int>("Budget")
                         .HasColumnType("int");
@@ -245,14 +236,18 @@ namespace MovieApi.Migrations
                         .HasMaxLength(2500)
                         .HasColumnType("nvarchar");
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieDetailsId");
+
+                    b.HasIndex("MovieId")
+                        .IsUnique()
+                        .HasFilter("[MovieId] IS NOT NULL");
 
                     b.ToTable("Details");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            MovieDetailsId = 1,
                             Budget = 150,
                             Language = "english",
                             MovieId = 1,
@@ -261,7 +256,7 @@ namespace MovieApi.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            MovieDetailsId = 2,
                             Budget = 170,
                             Language = "english",
                             MovieId = 2,
@@ -270,7 +265,7 @@ namespace MovieApi.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            MovieDetailsId = 3,
                             Budget = 200,
                             Language = "english",
                             MovieId = 3,
@@ -361,28 +356,32 @@ namespace MovieApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieApi.Models.Movie", b =>
-                {
-                    b.HasOne("MovieApi.Models.MovieDetails", null)
-                        .WithOne()
-                        .HasForeignKey("MovieApi.Models.Movie", "MovieDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MovieApi.Models.MovieActor", b =>
                 {
-                    b.HasOne("MovieApi.Models.Actor", null)
+                    b.HasOne("MovieApi.Models.Actor", "Actor")
                         .WithMany("MovieActor")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieApi.Models.Movie", null)
+                    b.HasOne("MovieApi.Models.Movie", "Movie")
                         .WithMany("MovieActor")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("MovieApi.Models.MovieDetails", b =>
+                {
+                    b.HasOne("MovieApi.Models.Movie", "Movie")
+                        .WithOne("MovieDetails")
+                        .HasForeignKey("MovieApi.Models.MovieDetails", "MovieId");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieApi.Models.Review", b =>
@@ -402,6 +401,8 @@ namespace MovieApi.Migrations
             modelBuilder.Entity("MovieApi.Models.Movie", b =>
                 {
                     b.Navigation("MovieActor");
+
+                    b.Navigation("MovieDetails");
 
                     b.Navigation("Reviews");
                 });

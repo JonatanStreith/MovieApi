@@ -64,7 +64,7 @@ public class MoviesController : ControllerBase
 
         var movie = await _movieRepository.AddMovieAsync(movieCreateDto);
 
-        return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
+        return CreatedAtAction("GetMovie", new { id = movie.MovieId }, movie);
     }
 
     // PUT: api/movies/5
@@ -112,6 +112,6 @@ public class MoviesController : ControllerBase
 
     private bool MovieExists(int? id)
     {
-        return _context.Movies.Any(e => e.Id == id);
+        return _context.Movies.Any(e => e.MovieId == id);
     }
 }

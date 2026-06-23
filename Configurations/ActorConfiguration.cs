@@ -10,7 +10,7 @@ namespace MovieApi.Configurations
         {
 
 
-            builder.HasKey(a => a.Id);
+            builder.HasKey(a => a.ActorId);
             builder.Property(a => a.Name)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -21,31 +21,31 @@ namespace MovieApi.Configurations
             builder.HasData(
                 new Actor()
                 {
-                    Id = 1,
+                    ActorId = 1,
                     Name = "Robert Downey Jr.",
                     BirthYear = 1965
                 },
                 new Actor()
                 {
-                    Id = 2,
+                    ActorId = 2,
                     Name = "Gwyneth Paltrow",
                     BirthYear = 1972
                 },
                 new Actor()
                 {
-                    Id = 3,
+                    ActorId = 3,
                     Name = "Terrence Howard",
                     BirthYear = 1969
                 },
                 new Actor()
                 {
-                    Id = 4,
+                    ActorId = 4,
                     Name = "Mickey Rourke",
                     BirthYear = 1952
                 },
                 new Actor()
                 {
-                    Id = 5,
+                    ActorId = 5,
                     Name = "Guy Pearce",
                     BirthYear = 1967
                 }

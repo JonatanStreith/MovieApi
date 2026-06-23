@@ -8,11 +8,11 @@ namespace MovieApi.Configurations
     {
         public void Configure(EntityTypeBuilder<Movie> builder)
         {
-            builder.HasOne<MovieDetails>()
-                    .WithOne()
-                    .HasForeignKey<Movie>(movie => movie.MovieDetailsId);
+            builder.HasOne<MovieDetails>(m => m.MovieDetails)
+                    .WithOne(d => d.Movie)
+                    .HasForeignKey<MovieDetails>(d => d.MovieId);
 
-            builder.HasKey(m => m.Id);
+            builder.HasKey(m => m.MovieId);
             builder.Property(m => m.Title)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -32,30 +32,27 @@ namespace MovieApi.Configurations
             builder.HasData(
                 new Movie
                 {
-                    Id = 1,
+                    MovieId = 1,
                     Title = "Iron Man 1",
                     Year = 2008,
                     Genre = "Action",
-                    Duration = 126,
-                    MovieDetailsId = 1
+                    Duration = 126
                 },
                 new Movie
                 {
-                    Id = 2,
+                    MovieId = 2,
                     Title = "Iron Man 2",
                     Year = 2010,
                     Genre = "Action",
-                    Duration = 124,
-                    MovieDetailsId = 2
+                    Duration = 124
                 },
                 new Movie
                 {
-                    Id = 3,
+                    MovieId = 3,
                     Title = "Iron Man 3",
                     Year = 2013,
                     Genre = "Action",
-                    Duration = 130,
-                    MovieDetailsId = 3
+                    Duration = 130
                 }
                 );
 
