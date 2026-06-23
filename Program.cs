@@ -15,6 +15,7 @@ namespace MovieApi
             // Add services to the container.
 
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+            builder.Services.AddScoped<IActorRepository, ActorRepository>();
 
 
             builder.Services.AddControllers();
