@@ -1,5 +1,6 @@
 ﻿using MovieApi.Dtos;
 using MovieApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieApi.Repositories
 {
@@ -12,14 +13,38 @@ namespace MovieApi.Repositories
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public bool ActorExists(int id)
+
+
+
+        public async Task<IEnumerable<ActorDto>> GetActorsAsync()
         {
-            throw new NotImplementedException();
+            var actors = await _context.Actors.OrderBy(a => a.Name).ToListAsync();
+
+
+            return actors.Select(actor => ConvertActorToDto(actor));
         }
 
-        public Task<Actor> AddActorAsync(ActorDto actorDto)
+        public async Task<ActorDto> GetActorAsync(int id)
         {
-            throw new NotImplementedException();
+            var actor = await _context.Actors.FindAsync(id);
+
+            if (actor == null) return null;
+
+
+            return ConvertActorToDto(actor);
+            
+        }
+
+        public async Task<Actor> AddActorAsync(ActorDto actorDto)
+        {
+            var actor = ConvertDtoToActor(actorDto);
+            if (actor == null) return null;
+
+            _context.Actors.Add(actor);
+
+            await SaveChangesAsync();
+
+            return actor;
         }
 
         public Task<bool> AddActorToMovieAsync(int movieId, int actorId)
@@ -27,19 +52,37 @@ namespace MovieApi.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<ActorDto> GetActorAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<ActorDto>> GetActorsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> UpdateActorAsync(int id, ActorDto actor)
         {
             throw new NotImplementedException();
+        }
+
+        public ActorDto ConvertActorToDto(Actor actor)
+        {
+            return new ActorDto()
+            {
+                Name = actor.Name,
+                BirthYear = actor.BirthYear
+            };
+        }
+
+        public Actor ConvertDtoToActor(ActorDto dto)
+        {
+            return new Actor()
+            {
+                Name = dto.Name,
+                BirthYear = dto.BirthYear
+            };
+        }
+
+        public bool ActorExists(int id)
+        {
+            return _context.Actors.Any(e => e.ActorId == id);
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() >= 0);
         }
     }
 }

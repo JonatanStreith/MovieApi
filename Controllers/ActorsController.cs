@@ -42,14 +42,14 @@ namespace MovieApi.Controllers
 
         //POST /api/actors
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<ActorDto>>> PostActor(ActorDto actorDto)
+        public async Task<ActionResult<Actor>> PostActor(ActorDto actorDto)
         {
             if (actorDto == null) return BadRequest("Incomplete or bad data.");
 
 
             var actor = await _actorRepository.AddActorAsync(actorDto);
 
-            return CreatedAtAction("GetMovie", new { id = actor.ActorId }, actor);
+            return CreatedAtAction("GetActor", new { id = actor.ActorId }, actor);
 
 
             return null;
