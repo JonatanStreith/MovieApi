@@ -2,6 +2,7 @@
 using MovieApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace MovieApi.Repositories
 {
@@ -71,15 +72,7 @@ namespace MovieApi.Repositories
                 };
             }
         }
-            //var movie = await _context.Movies.FindAsync(id);
 
-            //if (movie == null) return null;
-
-            //MovieDto movieWithDetails = new MovieDto()
-            //{
-            //    MovieId = movie.Id,
-
-            //};
         public async Task<MovieDetails> GetMovieDetailsAsync(int id)
         {
             return await _context.Details.FindAsync(id);
@@ -102,15 +95,58 @@ namespace MovieApi.Repositories
             return movie;
         }
 
-        public async Task UpdateMovieAsync(MovieUpdateDto movie)
+        public async Task<bool> UpdateMovieAsync(int id, MovieUpdateDto dto)
         {
-            throw new NotImplementedException();
+            if (!MovieExists(id)) {  return false; }
+
+            var movie = await _context.Movies.FindAsync(id);
+
+            movie.Title = dto.Title;
+            movie.Year = dto.Year;
+            movie.Genre = dto.Genre;
+            movie.Duration = dto.Duration;
+
+            _context.Entry(movie).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieExists(id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
+
         }
 
-        public async Task DeleteMovieAsync(int id)
+        public async Task<bool> DeleteMovieAsync(int id)
         {
-            throw new NotImplementedException();
+            if (!MovieExists(id)) { return false; }
+
+            var movie = await _context.Movies.FindAsync(id);
+
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
+            return true;
+
         }
+
+
+
+
+
+
+
+
 
 
         public async Task<(MovieDetails?, List<Review>, List<Actor>)> GetAdditionalDataAsync(int id)
@@ -169,6 +205,12 @@ namespace MovieApi.Repositories
 
             return movie;
         }
+
+        public bool MovieExists(int? id)
+        {
+            return _context.Movies.Any(e => e.MovieId == id);
+        }
+
 
     }
 }

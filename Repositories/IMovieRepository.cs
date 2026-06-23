@@ -10,8 +10,10 @@ namespace MovieApi.Repositories
         Task<IEnumerable<MovieDto>> GetMoviesAsync();
         Task<MovieDto?> GetMovieAsync(int id, bool fullData);
         Task<MovieDetails> GetMovieDetailsAsync(int id);
-        Task<Movie> AddMovieAsync(MovieCreateDto movie);
-        Task UpdateMovieAsync(MovieUpdateDto movie);
-        Task DeleteMovieAsync(int id);
+        Task<Movie> AddMovieAsync(MovieCreateDto dto);
+        Task<bool> UpdateMovieAsync(int id, MovieUpdateDto dto);
+        Task<bool> DeleteMovieAsync(int id);
+
+        bool MovieExists(int? id);
     }
 }

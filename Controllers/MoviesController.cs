@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Dtos;
@@ -8,7 +9,7 @@ using MovieApi.Repositories;
 [ApiController]
 public class MoviesController : ControllerBase
 {
-    private readonly MovieApiContext _context;
+    //private readonly MovieApiContext _context;
     private readonly IMovieRepository _movieRepository;
     public MoviesController(IMovieRepository movieRepository)
     {
@@ -70,48 +71,22 @@ public class MoviesController : ControllerBase
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutMovie(int? id, MovieUpdateDto movie)
+    public async Task<IActionResult> PutMovie(int id, MovieUpdateDto movie)
     {
 
-        _context.Entry(movie).State = EntityState.Modified;
+        bool result = await _movieRepository.UpdateMovieAsync(id, movie);
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!MovieExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        if (!result) return NotFound();
 
         return NoContent();
     }
 
     // DELETE: api/movies/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteMovie(int? id)
+    public async Task<IActionResult> DeleteMovie(int id)
     {
-        var movie = await _context.Movies.FindAsync(id);
-        if (movie == null)
-        {
-            return NotFound();
-        }
-
-        _context.Movies.Remove(movie);
-        await _context.SaveChangesAsync();
-
+        var result = await _movieRepository.DeleteMovieAsync(id);
+        if (!result) return NotFound();
         return NoContent();
-    }
-
-    private bool MovieExists(int? id)
-    {
-        return _context.Movies.Any(e => e.MovieId == id);
     }
 }
