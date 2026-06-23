@@ -35,42 +35,16 @@ namespace MovieApi.Repositories
 
             if (movie == null) return null;
 
-            if (fullData) 
+            var dto = ConvertMovieToDto(movie);
+
+            if (fullData)
             {
                 (var details, var reviews, var actors) = await GetAdditionalDataAsync(id);
 
-                //var result = reviews.Select(review => ConvertReviewToDto(review)).ToList();
-
-                return new MovieDto()
-                {
-                    Title = movie.Title,
-                    Year = movie.Year,
-                    Genre = movie.Genre,
-                    Duration = movie.Duration,
-
-                    Details = new MovieDetailDto()
-                    {
-                        MovieId = id,
-                        Synopsis = details.Synopsis,
-                        Language = details.Language,
-                        Budget = details.Budget,
-
-                        Reviews = reviews.Select(review => ConvertReviewToDto(review)).ToList(),
-                        Actors = actors.Select(actor => ConvertActorToDto(actor)).ToList()
-                    }
-                };
+                dto.Details = AddDetails(details, reviews, actors);
             }
 
-            else
-            {
-                return new MovieDto()
-                {
-                    Title = movie.Title,
-                    Year = movie.Year,
-                    Genre = movie.Genre,
-                    Duration = movie.Duration
-                };
-            }
+            return dto;
         }
 
         public async Task<MovieDetails> GetMovieDetailsAsync(int id)
@@ -97,7 +71,7 @@ namespace MovieApi.Repositories
 
         public async Task<bool> UpdateMovieAsync(int id, MovieUpdateDto dto)
         {
-            if (!MovieExists(id)) {  return false; }
+            if (!MovieExists(id)) { return false; }
 
             var movie = await _context.Movies.FindAsync(id);
 
@@ -163,6 +137,24 @@ namespace MovieApi.Repositories
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
+
+        public MovieDetailDto AddDetails(MovieDetails details, List<Review> reviews, List<Actor> actors)
+        {
+            return new MovieDetailDto()
+            {
+
+                MovieId = details.MovieId,
+                Synopsis = details.Synopsis,
+                Language = details.Language,
+                Budget = details.Budget,
+
+                Reviews = reviews.Select(review => ConvertReviewToDto(review)).ToList(),
+                Actors = actors.Select(actor => ConvertActorToDto(actor)).ToList()
+
+
+            };
+        }
+
 
         public ReviewDto ConvertReviewToDto(Review review)
         {
