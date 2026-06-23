@@ -18,10 +18,13 @@ namespace MovieApi.Repositories
 
 
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync()
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync()
         {
 
-            return await _context.Movies.OrderBy(m => m.Id).ToListAsync();
+            var movies = await _context.Movies.OrderBy(m => m.Title).ToListAsync();
+
+
+            return movies.Select(movie => ConvertMovieToDto(movie));
 
         }
 
@@ -82,9 +85,21 @@ namespace MovieApi.Repositories
             return await _context.Details.FindAsync(id);
         }
 
-        public async Task AddMovieAsync(MovieCreateDto movie)
+        public async Task<Movie> AddMovieAsync(MovieCreateDto dto)
         {
-            throw new NotImplementedException();
+            var movie = new Movie()
+            {
+                Title = dto.Title,
+                Year = dto.Year,
+                Genre = dto.Genre,
+                Duration = dto.Duration
+            };
+
+            _context.Movies.Add(movie);
+
+            SaveChangesAsync();
+
+            return movie;
         }
 
         public async Task UpdateMovieAsync(MovieUpdateDto movie)
@@ -98,12 +113,12 @@ namespace MovieApi.Repositories
         }
 
 
-        public async Task<(MovieDetails, List<Review>, List<Actor>)> GetAdditionalDataAsync(int id)
+        public async Task<(MovieDetails?, List<Review>, List<Actor>)> GetAdditionalDataAsync(int id)
         {
-            var details = await _context.Details.FirstOrDefaultAsync(detail => detail.MovieId == id);
-            var reviews = await _context.Reviews.Where(review => review.MovieId == id).ToListAsync();
+            MovieDetails? details = await _context.Details.FirstOrDefaultAsync(detail => detail.MovieId == id);
+            List<Review> reviews = await _context.Reviews.Where(review => review.MovieId == id).ToListAsync();
             var actorIds = await _context.MovieActors.Where(ma => ma.MovieId == id).Select(ma => ma.ActorId).ToListAsync();
-            var actors = await _context.Actors.Where(actor => actorIds.Contains(actor.Id)).ToListAsync();
+            List<Actor> actors = await _context.Actors.Where(actor => actorIds.Contains(actor.Id)).ToListAsync();
 
             return (details, reviews, actors);
         }
@@ -130,6 +145,29 @@ namespace MovieApi.Repositories
                 Name = actor.Name,
                 BirthYear = actor.BirthYear
             };
+        }
+        public MovieDto ConvertMovieToDto(Movie movie)
+        {
+            return new MovieDto()
+            {
+                Title = movie.Title,
+                Year = movie.Year,
+                Genre = movie.Genre,
+                Duration = movie.Duration
+            };
+        }
+
+        public Movie ConvertDtoToMovie(MovieDto dto)
+        {
+            var movie = new Movie()
+            {
+                Title = dto.Title,
+                Year = dto.Year,
+                Genre = dto.Genre,
+                Duration = dto.Duration
+            };
+
+            return movie;
         }
 
     }

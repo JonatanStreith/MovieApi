@@ -18,9 +18,11 @@ public class MoviesController : ControllerBase
 
     // GET: api/movies
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+    public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
     {
         var movies = _movieRepository.GetMoviesAsync();
+
+
         return Ok(movies);
     }
 
@@ -52,6 +54,18 @@ public class MoviesController : ControllerBase
         return Ok(movieDetails);
     }
 
+    // POST: api/movies
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<ActionResult<Movie>> PostMovie(MovieCreateDto movieCreateDto)
+    {
+        if (movieCreateDto == null) return BadRequest("Incomplete or bad data.");
+
+        var movie = _movieRepository.AddMovieAsync(movieCreateDto);
+
+        return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
+    }
+
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
@@ -77,17 +91,6 @@ public class MoviesController : ControllerBase
         }
 
         return NoContent();
-    }
-
-    // POST: api/movies
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    public async Task<ActionResult<Movie>> PostMovie(Movie movie)
-    {
-        _context.Movies.Add(movie);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
     }
 
     // DELETE: api/movies/5
