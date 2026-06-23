@@ -20,7 +20,7 @@ public class MoviesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
     {
-        var movies = _movieRepository.GetMoviesAsync();
+        var movies = await _movieRepository.GetMoviesAsync();
 
 
         return Ok(movies);
@@ -61,7 +61,8 @@ public class MoviesController : ControllerBase
     {
         if (movieCreateDto == null) return BadRequest("Incomplete or bad data.");
 
-        var movie = _movieRepository.AddMovieAsync(movieCreateDto);
+
+        var movie = await _movieRepository.AddMovieAsync(movieCreateDto);
 
         return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
     }

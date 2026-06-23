@@ -11,12 +11,10 @@ namespace MovieApi.Models
         public string? Genre { get; set; }
         public int Duration { get; set; }
 
-        public int MovieDetailsId { get; set; }
+        public int? MovieDetailsId { get; set; }
 
         public ICollection<Review>? Reviews { get; set; }
 
         public ICollection<MovieActor> MovieActor { get; set; }
-
-
     }
 }

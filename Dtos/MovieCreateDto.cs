@@ -12,5 +12,11 @@ namespace MovieApi.Dtos
         public string? Genre { get; set; }
         public int Duration { get; set; }
 
+        [MaxLength(2500)]
+        public string? Synopsis { get; set; }
+        [MaxLength(50)]
+        public string? Language { get; set; }
+        public int Budget { get; set; }
+
     }
 }

@@ -97,7 +97,7 @@ namespace MovieApi.Repositories
 
             _context.Movies.Add(movie);
 
-            SaveChangesAsync();
+            await SaveChangesAsync();
 
             return movie;
         }
