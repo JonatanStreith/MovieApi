@@ -41,14 +41,16 @@ public class MoviesController : ControllerBase
     }
 
     // GET /api/movies/{id}/details
-    [HttpGet("{id}/details")]
-    public async Task<ActionResult<Movie>> GetMovieDetails(int id)
+    [HttpGet("{movieId}/details")]
+    public async Task<ActionResult<Movie>> GetMovieDetails(int movieId)
     {
-        var movieDetails = await _movieService.GetMovieDetailsAsync(id);
+        if(!_movieService.MovieExists(movieId)) return NotFound($"The movie with the id {movieId} couldn't be found.");
+
+        var movieDetails = await _movieService.GetMovieDetailsAsync(movieId);
 
         if (movieDetails == null)
         {
-            return NotFound($"The movie with the id {id} couldn't be found.");
+            return NotFound("Movie Details not found for movie.");
         }
 
         return Ok(movieDetails);

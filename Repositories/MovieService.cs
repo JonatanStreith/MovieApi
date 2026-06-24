@@ -48,9 +48,14 @@ namespace MovieApi.Repositories
             return dto;
         }
 
-        public async Task<MovieDetails> GetMovieDetailsAsync(int id)
+        public async Task<MovieDetails> GetMovieDetailsAsync(int movieId)
         {
-            return await _context.Details.FindAsync(id);
+            var result = await _context.Movies
+                .Where(movie => movie.MovieId == movieId)
+                .Select(movie => movie.MovieDetails)
+                .FirstAsync();
+
+            return result;
         }
 
         public async Task<Movie> AddMovieAsync(MovieCreateDto dto)
