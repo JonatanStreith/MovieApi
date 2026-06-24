@@ -12,11 +12,14 @@ namespace MovieApi.Configurations
 
             builder.HasOne(ma => ma.Movie)
                     .WithMany(m => m.MovieActor)
-                    .HasForeignKey(ma => ma.MovieId);
+                    .HasForeignKey(ma => ma.MovieId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
+            
 
             builder.HasOne(ma => ma.Actor)
                     .WithMany(m => m.MovieActor)
-                    .HasForeignKey(ma => ma.ActorId);
+                    .HasForeignKey(ma => ma.ActorId)
+                    .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasKey(ma => ma.MovieActorId);
 
