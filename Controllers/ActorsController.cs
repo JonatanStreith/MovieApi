@@ -68,7 +68,7 @@ namespace MovieApi.Controllers
         }
 
         //POST /api/movies/{movieId}/actors/{actorId} (lägg till aktör till film med roll)
-        [HttpPost("{movieId}/actors/{actorId}")]
+        [HttpPost("/api/movies/{movieId}/actors/{actorId}")]
         public async Task<IActionResult> AddActorToMovie(int movieId, int actorId)
         {
             bool result = await _actorService.AddActorToMovieAsync(movieId, actorId);

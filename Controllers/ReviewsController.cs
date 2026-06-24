@@ -18,17 +18,19 @@ namespace MovieApi.Controllers
                     throw new ArgumentNullException(nameof(reviewService)); ;
         }
 
-        //GET /api/reviews/{movieId}/reviews
+        //GET /api/movies/{movieId}/reviews
         [HttpGet("/api/movies/{movieId}/reviews")]
         public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(int movieId)
         {
+            if (!_reviewService.MovieExists(movieId)) return NotFound($"No movie with id {movieId} exists in the database.");
+
             var reviews = await _reviewService.GetReviewsAsync(movieId);
 
 
             return Ok(reviews);
         }
-        //POST /api/reviews/{movieId}/reviews
-        [HttpPost("{movieId}/reviews")]
+        //POST /api/movies/{movieId}/reviews
+        [HttpPost("/api/movies/{movieId}/reviews")]
         public async Task<ActionResult<Review>> PostReview(int movieId, ReviewDto reviewDto)
         {
             if (reviewDto == null || reviewDto.MovieId != movieId) return BadRequest("Incomplete or bad data.");
