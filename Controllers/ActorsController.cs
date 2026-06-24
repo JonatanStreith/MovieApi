@@ -79,6 +79,17 @@ namespace MovieApi.Controllers
 
         }
 
+        //DELETE /api/actors/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteActor(int id)
+        {
+            bool result = await _actorRepository.DeleteActorAsync(id);
+
+            if (!result) return NotFound();
+
+            return NoContent();
+
+        }
 
     }
 }

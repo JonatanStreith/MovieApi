@@ -2,6 +2,10 @@
 using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MovieApi.Repositories;
+
 namespace MovieApi.Repositories
 {
     public class ActorService : IActorService
@@ -47,14 +51,45 @@ namespace MovieApi.Repositories
             return actor;
         }
 
-        public Task<bool> AddActorToMovieAsync(int movieId, int actorId)
+        public async Task<bool> AddActorToMovieAsync(int movieId, int actorId)
+        {
+            var movie = await _context.Movies.FindAsync(movieId);
+            var actor = await _context.Actors.FindAsync(actorId);
+
+            if (movie == null || actor == null) return false;
+
+            var movAct = new MovieActor()
+            {
+                MovieId = movieId,
+                ActorId = actorId,
+                Movie = movie,
+                Actor = actor
+            };
+
+            movie.MovieActor.Add(movAct);
+            actor.MovieActor.Add(movAct);
+
+            await SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> UpdateActorAsync(int id, ActorDto actor)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateActorAsync(int id, ActorDto actor)
+        public async Task<bool> DeleteActorAsync(int actorId)
         {
-            throw new NotImplementedException();
+            if (!ActorExists(actorId)) { return false; }
+
+            var actor = await _context.Actors.FindAsync(actorId);
+
+            _context.Actors.Remove(actor);
+
+            await _context.SaveChangesAsync();
+            return true;
+
         }
 
         public ActorDto ConvertActorToDto(Actor actor)

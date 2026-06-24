@@ -16,6 +16,8 @@ namespace MovieApi.Repositories
 
         Task<bool> AddActorToMovieAsync(int movieId, int actorId);
 
+        Task<bool> DeleteActorAsync(int actorId);
+
         bool ActorExists(int id);
     }
 }
