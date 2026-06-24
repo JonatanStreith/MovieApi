@@ -17,15 +17,21 @@ namespace MovieApi.Repositories
         }
 
 
-
-
-        public async Task<IEnumerable<MovieDto>> GetMoviesAsync()
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync([FromQuery] string? genre, int? year)
         {
+            var movies =  _context.Movies.AsQueryable();
 
-            var movies = await _context.Movies.OrderBy(m => m.Title).ToListAsync();
+            if (genre != null)
+            {
+                movies = movies.Where(movie => movie.Genre == genre);
+            }
 
+            if(year != null)
+            {
+                movies = movies.Where(movie => movie.Year == year);
+            }
 
-            return movies.Select(movie => ConvertMovieToDto(movie));
+            return await movies.OrderBy(m => m.Title).Select(movie => ConvertMovieToDto(movie)).ToListAsync();
 
         }
 
@@ -193,7 +199,5 @@ namespace MovieApi.Repositories
         {
             return _context.Movies.Any(e => e.MovieId == id);
         }
-
-
     }
 }

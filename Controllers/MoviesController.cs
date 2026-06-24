@@ -18,9 +18,9 @@ public class MoviesController : ControllerBase
 
     // GET: api/movies
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
+    public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year)
     {
-        var movies = await _movieService.GetMoviesAsync();
+        var movies = await _movieService.GetMoviesAsync(genre, year);
 
 
         return Ok(movies);
