@@ -50,9 +50,6 @@ namespace MovieApi.Controllers
             var actor = await _actorService.AddActorAsync(actorDto);
 
             return CreatedAtAction("GetActor", new { id = actor.ActorId }, actor);
-
-
-            return null;
         }
 
 
@@ -88,8 +85,6 @@ namespace MovieApi.Controllers
             if (!result) return NotFound();
 
             return NoContent();
-
         }
-
     }
 }
