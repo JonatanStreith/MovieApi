@@ -2,10 +2,6 @@
 using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using MovieApi.Repositories;
-
 namespace MovieApi.Repositories
 {
     public class ActorService : IActorService
@@ -36,7 +32,7 @@ namespace MovieApi.Repositories
 
 
             return ConvertActorToDto(actor);
-            
+
         }
 
         public async Task<Actor> AddActorAsync(ActorDto actorDto)
@@ -74,9 +70,34 @@ namespace MovieApi.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateActorAsync(int id, ActorDto actor)
+        public async Task<bool> UpdateActorAsync(int id, ActorDto dto)
         {
-            throw new NotImplementedException();
+            if (!ActorExists(id)) { return false; }
+
+            var actor = await _context.Actors.FindAsync(id);
+
+            actor.Name = dto.Name;
+            actor.BirthYear = dto.BirthYear;
+
+            _context.Entry(actor).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ActorExists(id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
         }
 
         public async Task<bool> DeleteActorAsync(int actorId)
