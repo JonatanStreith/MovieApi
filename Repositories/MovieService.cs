@@ -147,7 +147,7 @@ namespace MovieApi.Repositories
         }
 
 
-        public ReviewDto ConvertReviewToDto(Review review)
+        public static ReviewDto ConvertReviewToDto(Review review)
         {
             return new ReviewDto()
             {
@@ -157,7 +157,7 @@ namespace MovieApi.Repositories
                 MovieId = review.MovieId
             };
         }
-        public ActorDto ConvertActorToDto(Actor actor)
+        public static ActorDto ConvertActorToDto(Actor actor)
         {
             return new ActorDto()
             {
@@ -165,7 +165,7 @@ namespace MovieApi.Repositories
                 BirthYear = actor.BirthYear
             };
         }
-        public MovieDto ConvertMovieToDto(Movie movie)
+        public static MovieDto ConvertMovieToDto(Movie movie)
         {
             return new MovieDto()
             {
@@ -176,7 +176,7 @@ namespace MovieApi.Repositories
             };
         }
 
-        public Movie ConvertDtoToMovie(MovieDto dto)
+        public static Movie ConvertDtoToMovie(MovieDto dto)
         {
             var movie = new Movie()
             {

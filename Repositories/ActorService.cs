@@ -113,7 +113,7 @@ namespace MovieApi.Repositories
 
         }
 
-        public ActorDto ConvertActorToDto(Actor actor)
+        public static ActorDto ConvertActorToDto(Actor actor)
         {
             return new ActorDto()
             {
@@ -122,7 +122,7 @@ namespace MovieApi.Repositories
             };
         }
 
-        public Actor ConvertDtoToActor(ActorDto dto)
+        public static Actor ConvertDtoToActor(ActorDto dto)
         {
             return new Actor()
             {

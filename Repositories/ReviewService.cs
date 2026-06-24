@@ -52,7 +52,7 @@ namespace MovieApi.Repositories
         }
 
 
-        public ReviewDto ConvertReviewToDto(Review review)
+        public static ReviewDto ConvertReviewToDto(Review review)
         {
             return new ReviewDto()
             {
@@ -63,7 +63,7 @@ namespace MovieApi.Repositories
             };
         }
 
-        public Review ConvertDtoToReview(ReviewDto dto, string title)
+        public static Review ConvertDtoToReview(ReviewDto dto, string title)
         {
             return new Review()
             {
