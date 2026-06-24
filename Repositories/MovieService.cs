@@ -32,7 +32,6 @@ namespace MovieApi.Repositories
             }
 
             return await movies.OrderBy(m => m.Title).Select(movie => ConvertMovieToDto(movie)).ToListAsync();
-
         }
 
         public async Task<MovieDto?> GetMovieAsync(int id, bool fullData)
