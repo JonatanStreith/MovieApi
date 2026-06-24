@@ -1,8 +1,6 @@
 ﻿using MovieApi.Dtos;
 using MovieApi.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace MovieApi.Repositories
 {
@@ -15,7 +13,6 @@ namespace MovieApi.Repositories
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-
 
         public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year)
         {
@@ -32,7 +29,6 @@ namespace MovieApi.Repositories
             }
 
             return await movies.OrderBy(m => m.Title).Select(movie => ConvertMovieToDto(movie)).ToListAsync();
-
         }
 
         public async Task<MovieDto?> GetMovieAsync(int id, bool fullData)
@@ -49,7 +45,6 @@ namespace MovieApi.Repositories
 
                 dto.Details = AddDetails(details, reviews, actors);
             }
-
             return dto;
         }
 
@@ -147,8 +142,6 @@ namespace MovieApi.Repositories
 
                 Reviews = reviews.Select(review => ConvertReviewToDto(review)).ToList(),
                 Actors = actors.Select(actor => ConvertActorToDto(actor)).ToList()
-
-
             };
         }
 
