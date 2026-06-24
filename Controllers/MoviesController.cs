@@ -9,19 +9,18 @@ using MovieApi.Repositories;
 [ApiController]
 public class MoviesController : ControllerBase
 {
-    //private readonly MovieApiContext _context;
-    private readonly IMovieService _movieRepository;
-    public MoviesController(IMovieService movieRepository)
+    private readonly IMovieService _movieService;
+    public MoviesController(IMovieService movieService)
     {
-        _movieRepository = movieRepository ??
-                throw new ArgumentNullException(nameof(movieRepository)); ;
+        _movieService = movieService ??
+                throw new ArgumentNullException(nameof(movieService)); ;
     }
 
     // GET: api/movies
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies()
     {
-        var movies = await _movieRepository.GetMoviesAsync();
+        var movies = await _movieService.GetMoviesAsync();
 
 
         return Ok(movies);
@@ -31,7 +30,7 @@ public class MoviesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<MovieDto>> GetMovie(int id, bool fullData = false)
     {
-        var movie = await _movieRepository.GetMovieAsync(id, fullData);
+        var movie = await _movieService.GetMovieAsync(id, fullData);
 
         if (movie == null)
         {
@@ -45,7 +44,7 @@ public class MoviesController : ControllerBase
     [HttpGet("{id}/details")]
     public async Task<ActionResult<Movie>> GetMovieDetails(int id)
     {
-        var movieDetails = await _movieRepository.GetMovieDetailsAsync(id);
+        var movieDetails = await _movieService.GetMovieDetailsAsync(id);
 
         if (movieDetails == null)
         {
@@ -63,7 +62,7 @@ public class MoviesController : ControllerBase
         if (movieCreateDto == null) return BadRequest("Incomplete or bad data.");
 
 
-        var movie = await _movieRepository.AddMovieAsync(movieCreateDto);
+        var movie = await _movieService.AddMovieAsync(movieCreateDto);
 
         return CreatedAtAction("GetMovie", new { id = movie.MovieId }, movie);
     }
@@ -74,7 +73,7 @@ public class MoviesController : ControllerBase
     public async Task<IActionResult> PutMovie(int id, MovieUpdateDto movie)
     {
 
-        bool result = await _movieRepository.UpdateMovieAsync(id, movie);
+        bool result = await _movieService.UpdateMovieAsync(id, movie);
 
         if (!result) return NotFound();
 
@@ -85,7 +84,7 @@ public class MoviesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMovie(int id)
     {
-        var result = await _movieRepository.DeleteMovieAsync(id);
+        var result = await _movieService.DeleteMovieAsync(id);
         if (!result) return NotFound();
         return NoContent();
     }

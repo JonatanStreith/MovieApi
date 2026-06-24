@@ -10,18 +10,18 @@ namespace MovieApi.Controllers
     [ApiController]
     public class ActorsController : ControllerBase
     {
-        private readonly IActorService _actorRepository;
-        public ActorsController(IActorService actorRepository)
+        private readonly IActorService _actorService;
+        public ActorsController(IActorService actorService)
         {
-            _actorRepository = actorRepository ??
-                    throw new ArgumentNullException(nameof(actorRepository)); ;
+            _actorService = actorService ??
+                    throw new ArgumentNullException(nameof(actorService)); ;
         }
 
         //GET /api/actors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
         {
-            var actors = await _actorRepository.GetActorsAsync();
+            var actors = await _actorService.GetActorsAsync();
 
 
             return Ok(actors);
@@ -32,7 +32,7 @@ namespace MovieApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ActorDto>> GetActor(int id)
         {
-            var actor = await _actorRepository.GetActorAsync(id);
+            var actor = await _actorService.GetActorAsync(id);
 
             if (actor == null) return NotFound($"The actor with the id {id} couldn't be found.");
 
@@ -47,7 +47,7 @@ namespace MovieApi.Controllers
             if (actorDto == null) return BadRequest("Incomplete or bad data.");
 
 
-            var actor = await _actorRepository.AddActorAsync(actorDto);
+            var actor = await _actorService.AddActorAsync(actorDto);
 
             return CreatedAtAction("GetActor", new { id = actor.ActorId }, actor);
 
@@ -60,7 +60,7 @@ namespace MovieApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutActor(int id, ActorDto actor)
         {
-            bool result = await _actorRepository.UpdateActorAsync(id, actor);
+            bool result = await _actorService.UpdateActorAsync(id, actor);
 
             if (!result) return NotFound();
 
@@ -71,7 +71,7 @@ namespace MovieApi.Controllers
         [HttpPost("{movieId}/actors/{actorId}")]
         public async Task<IActionResult> AddActorToMovie(int movieId, int actorId)
         {
-            bool result = await _actorRepository.AddActorToMovieAsync(movieId, actorId);
+            bool result = await _actorService.AddActorToMovieAsync(movieId, actorId);
 
             if (!result) return NotFound();
 
@@ -83,7 +83,7 @@ namespace MovieApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActor(int id)
         {
-            bool result = await _actorRepository.DeleteActorAsync(id);
+            bool result = await _actorService.DeleteActorAsync(id);
 
             if (!result) return NotFound();
 
