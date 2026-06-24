@@ -19,7 +19,7 @@ namespace MovieApi.Controllers
         }
 
         //GET /api/reviews/{movieId}/reviews
-        [HttpGet("{movieId}/reviews")]
+        [HttpGet("/api/movies/{movieId}/reviews")]
         public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(int movieId)
         {
             var reviews = await _reviewService.GetReviewsAsync(movieId);
@@ -28,15 +28,16 @@ namespace MovieApi.Controllers
             return Ok(reviews);
         }
         //POST /api/reviews/{movieId}/reviews
-        [HttpPost]
+        [HttpPost("{movieId}/reviews")]
         public async Task<ActionResult<Review>> PostReview(int movieId, ReviewDto reviewDto)
         {
-            if (reviewDto == null) return BadRequest("Incomplete or bad data.");
-            
+            if (reviewDto == null || reviewDto.MovieId != movieId) return BadRequest("Incomplete or bad data.");
+
+            if(!_reviewService.MovieExists(movieId)) return BadRequest($"No movie with id {movieId} exists in the database.");
 
             Review review = await _reviewService.AddReviewAsync(movieId, reviewDto);
 
-            return CreatedAtAction("GetReviews", new { id = review.Id }, review);
+            return CreatedAtAction("PostReview", new { id = review.Id }, review);
         }
 
 

@@ -8,6 +8,9 @@ namespace MovieApi.Repositories
     {
         Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto);
         Task<bool> DeleteReviewAsync(int id);
-        Task<ActionResult<IEnumerable<ReviewDto>>> GetReviewsAsync(int movieId);
+        Task<IEnumerable<ReviewDto>> GetReviewsAsync(int movieId);
+
+        public bool MovieExists(int? id);
+
     }
 }
