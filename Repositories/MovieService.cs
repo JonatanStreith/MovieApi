@@ -17,7 +17,7 @@ namespace MovieApi.Repositories
         }
 
 
-        public async Task<IEnumerable<MovieDto>> GetMoviesAsync([FromQuery] string? genre, int? year)
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year)
         {
             var movies =  _context.Movies.AsQueryable();
 
