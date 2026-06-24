@@ -114,15 +114,6 @@ namespace MovieApi.Repositories
 
         }
 
-
-
-
-
-
-
-
-
-
         public async Task<(MovieDetails?, List<Review>, List<Actor>)> GetAdditionalDataAsync(int id)
         {
             MovieDetails? details = await _context.Details.FirstOrDefaultAsync(detail => detail.MovieId == id);
