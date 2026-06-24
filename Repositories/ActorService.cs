@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MovieApi.Repositories
 {
-    public class ActorRepository : IActorRepository
+    public class ActorService : IActorService
     {
 
         private readonly MovieApiContext _context;
 
-        public ActorRepository(MovieApiContext context)
+        public ActorService(MovieApiContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

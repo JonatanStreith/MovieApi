@@ -10,8 +10,8 @@ using MovieApi.Repositories;
 public class MoviesController : ControllerBase
 {
     //private readonly MovieApiContext _context;
-    private readonly IMovieRepository _movieRepository;
-    public MoviesController(IMovieRepository movieRepository)
+    private readonly IMovieService _movieRepository;
+    public MoviesController(IMovieService movieRepository)
     {
         _movieRepository = movieRepository ??
                 throw new ArgumentNullException(nameof(movieRepository)); ;

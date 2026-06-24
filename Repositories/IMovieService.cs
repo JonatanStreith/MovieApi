@@ -4,7 +4,7 @@ using MovieApi.Models;
 
 namespace MovieApi.Repositories
 {
-    public interface IMovieRepository
+    public interface IMovieService
     {
 
         Task<IEnumerable<MovieDto>> GetMoviesAsync();

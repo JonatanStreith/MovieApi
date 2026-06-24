@@ -10,8 +10,8 @@ namespace MovieApi.Controllers
     [ApiController]
     public class ActorsController : ControllerBase
     {
-        private readonly IActorRepository _actorRepository;
-        public ActorsController(IActorRepository actorRepository)
+        private readonly IActorService _actorRepository;
+        public ActorsController(IActorService actorRepository)
         {
             _actorRepository = actorRepository ??
                     throw new ArgumentNullException(nameof(actorRepository)); ;

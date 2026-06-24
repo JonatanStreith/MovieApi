@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace MovieApi.Repositories
 {
-    public class MovieRepository : IMovieRepository
+    public class MovieService : IMovieService
     {
 
         private readonly MovieApiContext _context;
 
-        public MovieRepository(MovieApiContext context)
+        public MovieService(MovieApiContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

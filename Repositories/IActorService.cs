@@ -3,7 +3,7 @@ using MovieApi.Models;
 
 namespace MovieApi.Repositories
 {
-    public interface IActorRepository
+    public interface IActorService
     {
         Task<IEnumerable<ActorDto>> GetActorsAsync();
 
