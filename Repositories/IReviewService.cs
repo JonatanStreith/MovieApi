@@ -6,7 +6,7 @@ namespace MovieApi.Repositories
 {
     public interface IReviewService
     {
-        Task<Review> AddReviewAsync(ReviewDto reviewDto);
+        Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto);
         Task<bool> DeleteReviewAsync(int id);
         Task<ActionResult<IEnumerable<ReviewDto>>> GetReviewsAsync(int movieId);
     }

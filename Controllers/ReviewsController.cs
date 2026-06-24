@@ -34,7 +34,7 @@ namespace MovieApi.Controllers
             if (reviewDto == null) return BadRequest("Incomplete or bad data.");
             
 
-            Review review = await _reviewService.AddReviewAsync(reviewDto);
+            Review review = await _reviewService.AddReviewAsync(movieId, reviewDto);
 
             return CreatedAtAction("GetReviews", new { id = review.Id }, review);
         }
