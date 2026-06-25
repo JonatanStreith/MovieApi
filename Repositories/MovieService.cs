@@ -1,6 +1,7 @@
 ﻿using MovieApi.Dtos;
 using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace MovieApi.Repositories
 {
@@ -16,14 +17,14 @@ namespace MovieApi.Repositories
 
         public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year)
         {
-            var movies =  _context.Movies.AsQueryable();
+            var movies = _context.Movies.AsQueryable();
 
             if (genre != null)
             {
                 movies = movies.Where(movie => movie.Genre == genre);
             }
 
-            if(year != null)
+            if (year != null)
             {
                 movies = movies.Where(movie => movie.Year == year);
             }
@@ -33,18 +34,68 @@ namespace MovieApi.Repositories
 
         public async Task<MovieDto?> GetMovieAsync(int id, bool fullData)
         {
-            var movie = await _context.Movies.FindAsync(id);
-
-            if (movie == null) return null;
-
-            var dto = ConvertMovieToDto(movie);
+            Movie movie;
 
             if (fullData)
             {
-                (var details, var reviews, var actors) = await GetAdditionalDataAsync(id);
-
-                dto.Details = AddDetails(details, reviews, actors);
+                movie = await _context.Movies
+                    .Include(movie => movie.MovieDetails)
+                    .Include(movie => movie.Reviews)
+                    .Include(movie => movie.MovieActor)
+                .Where(movie => movie.MovieId == id).FirstAsync();
             }
+
+            else
+            {
+                movie = await _context.Movies
+                .Where(movie => movie.MovieId == id).FirstAsync();
+
+            }
+
+            if (movie == null) return null;
+
+
+
+            var dto = new MovieDto()
+            {
+                Title = movie.Title,
+                Year = movie.Year,
+                Genre = movie.Genre,
+                Duration = movie.Duration
+            };
+
+            if (fullData)
+            {
+                dto.Details = new MovieDetailDto();
+                if (movie.MovieDetails != null)
+                {
+                    dto.Details.MovieId = movie.MovieId;
+                    dto.Details.Synopsis = movie.MovieDetails.Synopsis;
+                    dto.Details.Language = movie.MovieDetails.Language;
+                    dto.Details.Budget = movie.MovieDetails.Budget;
+                }
+                dto.Details.Reviews = movie.Reviews.Select(review => ConvertReviewToDto(review)).ToList();
+
+                var actorIds = await _context.MovieActors.Where(ma => ma.MovieId == movie.MovieId).Select(ma => ma.ActorId).ToListAsync();
+                List<Actor> actors = await _context.Actors.Where(actor => actorIds.Contains(actor.ActorId)).ToListAsync();
+
+                dto.Details.Actors = actors.Select(actor => ConvertActorToDto(actor)).ToList();
+            }
+
+            return dto;
+        }
+
+        public static MovieDto ConvertMovieToDto(Movie movie)
+        {
+            var dto = new MovieDto()
+            {
+                Title = movie.Title,
+                Year = movie.Year,
+                Genre = movie.Genre,
+                Duration = movie.Duration
+            };
+
+
             return dto;
         }
 
@@ -167,16 +218,6 @@ namespace MovieApi.Repositories
             {
                 Name = actor.Name,
                 BirthYear = actor.BirthYear
-            };
-        }
-        public static MovieDto ConvertMovieToDto(Movie movie)
-        {
-            return new MovieDto()
-            {
-                Title = movie.Title,
-                Year = movie.Year,
-                Genre = movie.Genre,
-                Duration = movie.Duration
             };
         }
 

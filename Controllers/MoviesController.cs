@@ -61,9 +61,6 @@ public class MoviesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Movie>> PostMovie(MovieCreateDto movieCreateDto)
     {
-        if (movieCreateDto == null) return BadRequest("Incomplete or bad data.");
-
-
         var movie = await _movieService.AddMovieAsync(movieCreateDto);
 
         return CreatedAtAction("GetMovie", new { id = movie.MovieId }, movie);
