@@ -15,6 +15,8 @@ namespace MovieApi
 
             // Add services to the container.
 
+            builder.Services.AddScoped<IAppDbContext, MovieApiContext>();
+
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddScoped<IActorService, ActorService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
