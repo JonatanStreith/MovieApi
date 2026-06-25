@@ -9,9 +9,9 @@ namespace MovieApi.Services
     public class ReviewService : IReviewService
     {
 
-        private readonly MovieApiContext _context;
+        private readonly IAppDbContext _context;
 
-        public ReviewService(MovieApiContext context)
+        public ReviewService(IAppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -32,7 +32,7 @@ namespace MovieApi.Services
 
             movie.Reviews.Add(review);
 
-            _context.Entry(movie).State = EntityState.Modified;
+            //_context.Entry(movie).State = EntityState.Modified;
 
             await SaveChangesAsync();
 

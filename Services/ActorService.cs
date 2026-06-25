@@ -8,9 +8,9 @@ namespace MovieApi.Services
     public class ActorService : IActorService
     {
 
-        private readonly MovieApiContext _context;
+        private readonly IAppDbContext _context;
 
-        public ActorService(MovieApiContext context)
+        public ActorService(IAppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -80,7 +80,7 @@ namespace MovieApi.Services
             actor.Name = dto.Name;
             actor.BirthYear = dto.BirthYear;
 
-            _context.Entry(actor).State = EntityState.Modified;
+            //_context.Entry(actor).State = EntityState.Modified;
 
             try
             {

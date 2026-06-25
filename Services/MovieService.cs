@@ -9,9 +9,9 @@ namespace MovieApi.Services
     public class MovieService : IMovieService
     {
 
-        private readonly MovieApiContext _context;
+        private readonly IAppDbContext _context;
 
-        public MovieService(MovieApiContext context)
+        public MovieService(IAppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -138,7 +138,7 @@ namespace MovieApi.Services
             movie.Genre = dto.Genre;
             movie.Duration = dto.Duration;
 
-            _context.Entry(movie).State = EntityState.Modified;
+            //_context.Entry(movie).State = EntityState.Modified;
 
             try
             {
