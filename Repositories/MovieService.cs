@@ -171,16 +171,6 @@ namespace MovieApi.Repositories
 
         }
 
-        public async Task<(MovieDetails?, List<Review>, List<Actor>)> GetAdditionalDataAsync(int id)
-        {
-            MovieDetails? details = await _context.Details.FirstOrDefaultAsync(detail => detail.MovieId == id);
-            List<Review> reviews = await _context.Reviews.Where(review => review.MovieId == id).ToListAsync();
-            var actorIds = await _context.MovieActors.Where(ma => ma.MovieId == id).Select(ma => ma.ActorId).ToListAsync();
-            List<Actor> actors = await _context.Actors.Where(actor => actorIds.Contains(actor.ActorId)).ToListAsync();
-
-            return (details, reviews, actors);
-        }
-
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
