@@ -1,6 +1,7 @@
 ﻿using MovieApi.Dtos;
 using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
+using MovieApi.Contexts;
 
 namespace MovieApi.Services
 {
