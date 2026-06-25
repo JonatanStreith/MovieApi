@@ -4,7 +4,7 @@ using System.Reflection;
 namespace MovieApi.Contexts
 {
 
-    public class MovieApiContext(DbContextOptions<MovieApiContext> options) : DbContext(options)
+    public class MovieApiContext(DbContextOptions<MovieApiContext> options) : DbContext(options), IAppDbContext
     {
         public DbSet<MovieApi.Models.Movie> Movies { get; set; } = default!;
         public DbSet<MovieApi.Models.MovieDetails> Details { get; set; } = default!;
