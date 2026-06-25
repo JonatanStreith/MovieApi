@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MovieApi.Repositories;
+using MovieApi.Services;
 
 namespace MovieApi
 {

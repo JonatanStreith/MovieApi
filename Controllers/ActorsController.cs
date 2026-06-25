@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Dtos;
 using MovieApi.Models;
-using MovieApi.Repositories;
+using MovieApi.Services;
 
 namespace MovieApi.Controllers
 {

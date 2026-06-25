@@ -1,7 +1,7 @@
 ﻿using MovieApi.Dtos;
 using MovieApi.Models;
 
-namespace MovieApi.Repositories
+namespace MovieApi.Services
 {
     public interface IActorService
     {

@@ -2,7 +2,7 @@
 using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace MovieApi.Repositories
+namespace MovieApi.Services
 {
     public class ActorService : IActorService
     {

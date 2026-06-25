@@ -3,7 +3,7 @@ using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
-namespace MovieApi.Repositories
+namespace MovieApi.Services
 {
     public class MovieService : IMovieService
     {

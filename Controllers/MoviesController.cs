@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Dtos;
 using MovieApi.Models;
-using MovieApi.Repositories;
+using MovieApi.Services;
 
 [Route("api/movies")]
 [ApiController]
