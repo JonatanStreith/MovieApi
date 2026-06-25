@@ -4,8 +4,6 @@ namespace MovieApi.Contexts
 {
     public interface IAppDbContext
     {
-        public interface IAppDbContext
-        {
 
             DbSet<MovieApi.Models.Movie> Movies { get; set; }
             DbSet<MovieApi.Models.MovieDetails> Details { get; set; }
@@ -15,7 +13,6 @@ namespace MovieApi.Contexts
 
 
             Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-        }
 
     }
 }
