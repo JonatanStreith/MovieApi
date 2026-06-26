@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../MovieApiTest/MovieApiTest.csproj" Id="d5825c58-ce2a-41f6-b018-fb8978cf3156" />
-  <Project Path="MovieApi.csproj" />
+  <Project Path="MovieApiTest/MovieApiTest.csproj" Id="d5825c58-ce2a-41f6-b018-fb8978cf3156" />
+  <Project Path="MovieApi/MovieApi.csproj" />
 </Solution>
