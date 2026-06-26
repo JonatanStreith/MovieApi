@@ -55,7 +55,7 @@ namespace MovieApi.Controllers
 
         //PUT /api/actors/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActor(int id, ActorDto actor)
+        public async Task<ActionResult> PutActor(int id, ActorDto actor)
         {
             bool result = await _actorService.UpdateActorAsync(id, actor);
 
@@ -66,7 +66,7 @@ namespace MovieApi.Controllers
 
         //POST /api/movies/{movieId}/actors/{actorId} (lägg till aktör till film med roll)
         [HttpPost("/api/movies/{movieId}/actors/{actorId}")]
-        public async Task<IActionResult> AddActorToMovie(int movieId, int actorId)
+        public async Task<ActionResult> AddActorToMovie(int movieId, int actorId)
         {
             bool result = await _actorService.AddActorToMovieAsync(movieId, actorId);
 
@@ -78,7 +78,7 @@ namespace MovieApi.Controllers
 
         //DELETE /api/actors/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActor(int id)
+        public async Task<ActionResult> DeleteActor(int id)
         {
             bool result = await _actorService.DeleteActorAsync(id);
 

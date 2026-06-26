@@ -45,7 +45,7 @@ namespace MovieApi.Controllers
 
         //DELETE /api/reviews/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReview(int id)
+        public async Task<ActionResult> DeleteReview(int id)
         {
             var result = await _reviewService.DeleteReviewAsync(id);
             if (!result) return NotFound();

@@ -63,13 +63,15 @@ public class MoviesController : ControllerBase
     {
         var movie = await _movieService.AddMovieAsync(movieCreateDto);
 
+        if (movie == null) return BadRequest("Movie could not be added; faulty data.");
+
         return CreatedAtAction("GetMovie", new { id = movie.MovieId }, movie);
     }
 
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutMovie(int id, MovieUpdateDto movie)
+    public async Task<ActionResult> PutMovie(int id, MovieUpdateDto movie)
     {
 
         bool result = await _movieService.UpdateMovieAsync(id, movie);
@@ -81,7 +83,7 @@ public class MoviesController : ControllerBase
 
     // DELETE: api/movies/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteMovie(int id)
+    public async Task<ActionResult> DeleteMovie(int id)
     {
         var result = await _movieService.DeleteMovieAsync(id);
         if (!result) return NotFound();
