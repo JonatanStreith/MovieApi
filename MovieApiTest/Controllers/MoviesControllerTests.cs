@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MovieApi.Dtos;
 using MovieApi.Models;
@@ -235,12 +236,175 @@ namespace MovieApiTest.Controllers
 
         }
 
+        [Fact]
+        public async Task PostMovieAsync_ReturnCreatedAtAction()
+        {
+            //Arrange
+            var newMovieDto = new MovieCreateDto()
+            {
+                Title = "Ferngully",
+                Genre = "animation",
+                Year = 1992,
+                Language = "english",
+                Synopsis = "Animated environmental film",
+                Budget = 24,
+                Duration = 76
+            };
+
+            var mockService = new Mock<IMovieService>();
+            mockService.Setup(s => s.AddMovieAsync(newMovieDto))
+            .ReturnsAsync(new Movie()
+            {
+                MovieId = 89,
+                Title = newMovieDto.Title,
+                Genre = newMovieDto.Genre,
+                Year = newMovieDto.Year,
+                Duration = newMovieDto.Duration,
+                MovieDetails = new MovieDetails()
+
+                {
+                    Language = newMovieDto.Language,
+                    Synopsis = newMovieDto.Synopsis,
+                    Budget = 24,
+                    MovieId = 89,
+                    MovieTitle = newMovieDto.Title
+                }
+            }
 
 
-        //PostMovie
+            );
 
-        //PutMovie
+            var controller = new MoviesController(mockService.Object);
 
-        //DeleteMovie
+            //Act
+            var result = await controller.PostMovie(newMovieDto);
+
+            //Assert
+            var caaResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var movie = Assert.IsType<Movie>(caaResult.Value);
+            Assert.Equal("GetMovie", caaResult.ActionName);
+            Assert.Equal("Ferngully", movie.Title);
+            Assert.Equal(24, movie.MovieDetails.Budget);
+
+        }
+
+        [Fact]
+        public async Task PostMovieAsync_BadData_ReturnBadRequest()
+        {
+            //Arrange
+            var newMovieDto = new MovieCreateDto()
+            {
+                
+                Genre = "animation",
+                Year = 1992,
+                Language = "english",
+                Synopsis = "Animated environmental film",
+                Budget = 24,
+                Duration = 76
+            };
+
+            var mockService = new Mock<IMovieService>();
+            mockService.Setup(s => s.AddMovieAsync(newMovieDto))
+            .ReturnsAsync((Movie)null);
+
+            var controller = new MoviesController(mockService.Object);
+
+            //Act
+            var result = await controller.PostMovie(newMovieDto);
+
+            //Assert
+            var brResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+            var message = Assert.IsType<string>(brResult.Value);
+            Assert.Equal("Movie could not be added; faulty data.", message);
+        }
+
+        [Fact]
+        public async Task PutMovieAsync_ReturnNoContent()
+        {
+            //Arrange
+            var newMovieDto = new MovieUpdateDto()
+            {
+                Title = "Ferngully",
+                Genre = "eco-documentary",
+                Year = 1992,
+                Duration = 76
+            };
+
+            var mockService = new Mock<IMovieService>();
+            mockService.Setup(s => s.UpdateMovieAsync(5, newMovieDto))
+            .ReturnsAsync(true);
+
+            var controller = new MoviesController(mockService.Object);
+
+            //Act
+            var result = await controller.PutMovie(5, newMovieDto);
+
+            //Assert
+            var ncResult = Assert.IsType<NoContentResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task PutMovieAsync_BadData_ReturnBadRequest()
+        {
+            //Arrange
+            var newMovieDto = new MovieUpdateDto()
+            {
+                //Title = "Ferngully",
+                Genre = "eco-documentary",
+                Year = 1992,
+                Duration = 76
+            };
+
+            var mockService = new Mock<IMovieService>();
+            mockService.Setup(s => s.UpdateMovieAsync(5, newMovieDto))
+            .ReturnsAsync(false);
+
+            var controller = new MoviesController(mockService.Object);
+
+            //Act
+            var result = await controller.PutMovie(5, newMovieDto);
+
+            //Assert
+            var nfResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var message = Assert.IsType<string>(nfResult.Value);
+            Assert.Equal("The movie with the id 5 couldn't be found.", message);
+        }
+
+        [Fact]
+        public async Task DeleteMovieAsync_ReturnNoContent()
+        {
+            //Arrange
+            var mockService = new Mock<IMovieService>();
+            mockService.Setup(s => s.DeleteMovieAsync(5))
+            .ReturnsAsync(true);
+
+            var controller = new MoviesController(mockService.Object);
+
+            //Act
+            var result = await controller.DeleteMovie(5);
+
+            //Assert
+            var ncResult = Assert.IsType<NoContentResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task DeleteMovieAsync_BadId_ReturnNotFound()
+        {
+            //Arrange
+            var mockService = new Mock<IMovieService>();
+            mockService.Setup(s => s.DeleteMovieAsync(5))
+            .ReturnsAsync(false);
+
+            var controller = new MoviesController(mockService.Object);
+
+            //Act
+            var result = await controller.DeleteMovie(5);
+
+            //Assert
+            var nfResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var message = Assert.IsType<string>(nfResult.Value);
+            Assert.Equal("The movie with the id 5 couldn't be found.", message);
+
+        }
     }
 }
