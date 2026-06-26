@@ -71,22 +71,22 @@ public class MoviesController : ControllerBase
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<ActionResult> PutMovie(int id, MovieUpdateDto movie)
+    public async Task<ActionResult<bool>> PutMovie(int movieId, MovieUpdateDto movie)
     {
 
-        bool result = await _movieService.UpdateMovieAsync(id, movie);
+        bool result = await _movieService.UpdateMovieAsync(movieId, movie);
 
-        if (!result) return NotFound();
+        if (!result) return NotFound($"The movie with the id {movieId} couldn't be found.");
 
         return NoContent();
     }
 
     // DELETE: api/movies/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteMovie(int id)
+    public async Task<ActionResult<bool>> DeleteMovie(int movieId)
     {
-        var result = await _movieService.DeleteMovieAsync(id);
-        if (!result) return NotFound();
+        var result = await _movieService.DeleteMovieAsync(movieId);
+        if (!result) return NotFound($"The movie with the id {movieId} couldn't be found.");
         return NoContent();
     }
 }
