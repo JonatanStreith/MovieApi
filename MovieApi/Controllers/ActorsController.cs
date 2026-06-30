@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Dtos;
+using MovieApi.Interfaces;
 using MovieApi.Models;
-using MovieApi.Services;
 
 namespace MovieApi.Controllers
 {

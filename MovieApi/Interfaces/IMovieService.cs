@@ -2,7 +2,7 @@
 using MovieApi.Dtos;
 using MovieApi.Models;
 
-namespace MovieApi.Services
+namespace MovieApi.Interfaces
 {
     public interface IMovieService
     {

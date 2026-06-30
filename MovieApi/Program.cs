@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Contexts;
+using MovieApi.Interfaces;
 using MovieApi.Services;
 
 namespace MovieApi

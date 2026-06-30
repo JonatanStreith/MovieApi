@@ -2,8 +2,8 @@
 using Moq;
 using MovieApi.Controllers;
 using MovieApi.Dtos;
+using MovieApi.Interfaces;
 using MovieApi.Models;
-using MovieApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="MovieApi.Core/MovieApi.Core.csproj" Id="6a7de04a-0a5d-4a42-a2c6-a788703153cf" />
+  <Project Path="MovieApi.Data/MovieApi.Data.csproj" Id="77b55ea9-c198-4d8e-9e56-131db11707c0" />
   <Project Path="MovieApi/MovieApi.csproj">
     <Build Solution="Debug|*" Project="false" />
   </Project>

@@ -3,6 +3,7 @@ using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using MovieApi.Contexts;
+using MovieApi.Interfaces;
 
 namespace MovieApi.Services
 {
