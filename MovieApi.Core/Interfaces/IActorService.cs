@@ -12,12 +12,14 @@ namespace MovieApi.Interfaces
 
         Task<Actor> AddActorAsync(ActorDto actorDto);
 
-        Task<bool> UpdateActorAsync(int id, ActorDto actor);
-
         Task<bool> AddActorToMovieAsync(int movieId, int actorId);
+
+        Task<bool> UpdateActorAsync(int id, ActorDto actor);
 
         Task<bool> DeleteActorAsync(int actorId);
 
         bool ActorExists(int id);
+
+        Task<bool> SaveChangesAsync();
     }
 }

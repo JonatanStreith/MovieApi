@@ -12,5 +12,6 @@ namespace MovieApi.Interfaces
 
         public bool MovieExists(int? id);
 
+        Task<bool> SaveChangesAsync();
     }
 }

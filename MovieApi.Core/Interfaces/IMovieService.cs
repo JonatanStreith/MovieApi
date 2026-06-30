@@ -14,6 +14,9 @@ namespace MovieApi.Interfaces
         Task<bool> UpdateMovieAsync(int id, MovieUpdateDto dto);
         Task<bool> DeleteMovieAsync(int id);
 
+        
         bool MovieExists(int? id);
+
+        Task<bool> SaveChangesAsync();
     }
 }
