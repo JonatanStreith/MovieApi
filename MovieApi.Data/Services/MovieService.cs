@@ -178,7 +178,7 @@ namespace MovieApi.Services
             return (await _context.SaveChangesAsync() >= 0);
         }
 
-        public MovieDetailDto AddDetails(MovieDetails details, List<Review> reviews, List<Actor> actors)
+        public static MovieDetailDto AddDetails(MovieDetails details, List<Review> reviews, List<Actor> actors)
         {
             return new MovieDetailDto()
             {
