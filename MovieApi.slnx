@@ -1,10 +1,6 @@
 <Solution>
   <Project Path="MovieApi.Core/MovieApi.Core.csproj" Id="6a7de04a-0a5d-4a42-a2c6-a788703153cf" />
   <Project Path="MovieApi.Data/MovieApi.Data.csproj" Id="77b55ea9-c198-4d8e-9e56-131db11707c0" />
-  <Project Path="MovieApi/MovieApi.csproj">
-    <Build Solution="Debug|*" Project="false" />
-  </Project>
-  <Project Path="MovieApiTest/MovieApiTest.csproj" Id="d5825c58-ce2a-41f6-b018-fb8978cf3156">
-    <Build Solution="Debug|*" Project="false" />
-  </Project>
+  <Project Path="MovieApi/MovieApi.csproj" />
+  <Project Path="MovieApiTest/MovieApiTest.csproj" Id="d5825c58-ce2a-41f6-b018-fb8978cf3156" />
 </Solution>

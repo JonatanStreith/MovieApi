@@ -20,13 +20,6 @@ namespace MovieApi.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok("This endpoint works");
-        }
-
-
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
         {

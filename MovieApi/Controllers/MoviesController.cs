@@ -34,7 +34,7 @@ public class MoviesController : ControllerBase
 
         if (movie == null)
         {
-            return NotFound($"The movie with the id {id} couldn't be found.");
+            return NotFound($"The movie with the id {id} couldn't be faund.");
         }
 
         return Ok(movie);
