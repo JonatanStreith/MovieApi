@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MovieApi.Contracts.Contracts
 {
-    internal interface IMovieService
+    public interface IMovieService
     {
         Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year);
         Task<MovieDto?> GetMovieAsync(int id, bool fullData);

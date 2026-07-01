@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MovieApi.Contracts.Contracts
 {
-    internal interface IServiceManager
+    public interface IServiceManager
     {
         IMovieService Movies { get; }
         IReviewService Reviews { get; }

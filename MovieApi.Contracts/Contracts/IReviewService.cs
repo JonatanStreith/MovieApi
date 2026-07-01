@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MovieApi.Contracts.Contracts
 {
-    internal interface IReviewService
+    public interface IReviewService
     {
         Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto);
         Task<bool> DeleteReviewAsync(int id);

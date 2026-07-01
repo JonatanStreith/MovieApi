@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MovieApi.Contracts.Contracts
 {
-    internal interface IActorService
+    public interface IActorService
     {
         Task<IEnumerable<ActorDto>> GetActorsAsync();
 
