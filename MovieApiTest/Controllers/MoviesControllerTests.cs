@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
@@ -13,11 +14,19 @@ namespace MovieApiTest.Controllers
     public class MoviesControllerTests
     {
 
+        Mock<IMovieService> mockService = new Mock<IMovieService>();        //The service we mock
+        Mock<IUnitOfWork> mockUnit = new Mock<IUnitOfWork>();
+            
+            
+            
+
+
         [Fact]
         public async Task GetMovieAsync_NoDetails_ReturnsOkWithMovie()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();        //The service we mock
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
+
             mockService.Setup(s => s.GetMovieAsync(1, false))   //The Api we call
             .ReturnsAsync(new MovieDto()
             {                        //What it returns
@@ -27,7 +36,7 @@ namespace MovieApiTest.Controllers
                 Duration = 126
             });
 
-            var controller = new MoviesController(mockService.Object);  //The controller we want to test
+            var controller = new MoviesController(mockUnit.Object);  //The controller we want to test
 
             //Act
             var result = await controller.GetMovie(1, false);           //Run phony Api call
@@ -42,7 +51,7 @@ namespace MovieApiTest.Controllers
         public async Task GetMovieAsync_WithDetails_ReturnsOkWithMovie()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMovieAsync(1, true))
             .ReturnsAsync(new MovieDto()
             {
@@ -59,7 +68,7 @@ namespace MovieApiTest.Controllers
                 }
             });
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovie(1, true);
@@ -76,11 +85,11 @@ namespace MovieApiTest.Controllers
         public async Task GetMovieAsync_BadId_ReturnsNotFound()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMovieAsync(99, true))
             .ReturnsAsync((MovieDto)null);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovie(99, true);
@@ -96,7 +105,7 @@ namespace MovieApiTest.Controllers
         public async Task GetMoviesAsync_WithFiltering_ReturnsOkWithMovieList()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMoviesAsync("action", 2008))
             .ReturnsAsync(new List<MovieDto>()
             {
@@ -107,7 +116,7 @@ namespace MovieApiTest.Controllers
             }
             );
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovies("action", 2008);
@@ -126,7 +135,7 @@ namespace MovieApiTest.Controllers
         public async Task GetMoviesAsync_WithoutFiltering_ReturnsOkWithMovieList()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMoviesAsync(null, null))
             .ReturnsAsync(new List<MovieDto>()
             {
@@ -146,7 +155,7 @@ namespace MovieApiTest.Controllers
             }
             );
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovies(null, null);
@@ -165,12 +174,12 @@ namespace MovieApiTest.Controllers
         public async Task GetMoviesAsync_FilteringOutOfBounds_ReturnsOkWithEmptyMovieList()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMoviesAsync("comedy", null))
             .ReturnsAsync(new List<MovieDto>()
             );
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovies("comedy", null);
@@ -186,7 +195,7 @@ namespace MovieApiTest.Controllers
         public async Task GetMovieDetailsAsync_ReturnsOkWithDetails()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMovieDetailsAsync(1))
             .ReturnsAsync(new MovieDetails()
             {
@@ -202,7 +211,7 @@ namespace MovieApiTest.Controllers
 
             mockService.Setup(s => s.MovieExists(1)).Returns(true);     //Needs to ensure that it thinks the movie exists
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovieDetails(1);
@@ -220,11 +229,11 @@ namespace MovieApiTest.Controllers
         public async Task GetMovieDetailsAsync_BadId_ReturnNotFound()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.GetMovieDetailsAsync(99))
             .ReturnsAsync((MovieDetails)null);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.GetMovieDetails(99);
@@ -251,7 +260,7 @@ namespace MovieApiTest.Controllers
                 Duration = 76
             };
 
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.AddMovieAsync(newMovieDto))
             .ReturnsAsync(new Movie()
             {
@@ -274,7 +283,7 @@ namespace MovieApiTest.Controllers
 
             );
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.PostMovie(newMovieDto);
@@ -303,11 +312,11 @@ namespace MovieApiTest.Controllers
                 Duration = 76
             };
 
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.AddMovieAsync(newMovieDto))
             .ReturnsAsync((Movie)null);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.PostMovie(newMovieDto);
@@ -330,11 +339,11 @@ namespace MovieApiTest.Controllers
                 Duration = 76
             };
 
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.UpdateMovieAsync(5, newMovieDto))
             .ReturnsAsync(true);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.PutMovie(5, newMovieDto);
@@ -355,11 +364,11 @@ namespace MovieApiTest.Controllers
                 Duration = 76
             };
 
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.UpdateMovieAsync(5, newMovieDto))
             .ReturnsAsync(false);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.PutMovie(5, newMovieDto);
@@ -374,11 +383,11 @@ namespace MovieApiTest.Controllers
         public async Task DeleteMovieAsync_ReturnNoContent()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.DeleteMovieAsync(5))
             .ReturnsAsync(true);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.DeleteMovie(5);
@@ -391,11 +400,11 @@ namespace MovieApiTest.Controllers
         public async Task DeleteMovieAsync_BadId_ReturnNotFound()
         {
             //Arrange
-            var mockService = new Mock<IMovieService>();
+            mockUnit.Setup(x => x.Movies).Returns(mockService.Object);
             mockService.Setup(s => s.DeleteMovieAsync(5))
             .ReturnsAsync(false);
 
-            var controller = new MoviesController(mockService.Object);
+            var controller = new MoviesController(mockUnit.Object);
 
             //Act
             var result = await controller.DeleteMovie(5);

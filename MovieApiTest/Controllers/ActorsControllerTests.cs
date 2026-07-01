@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MovieApi.Controllers;
+using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
@@ -12,11 +13,16 @@ namespace MovieApiTest.Controllers
 {
     public class ActorsControllerTests
     {
+
+        Mock<IActorService> mockService = new Mock<IActorService>();
+        Mock<IUnitOfWork> mockUnit = new Mock<IUnitOfWork>();
+
+
         [Fact]
         public async Task GetActorsAsync_ReturnsOkWithActorsList()
         {
             //Arrange
-            var mockService = new Mock<IActorService>();    
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.GetActorsAsync()) 
             .ReturnsAsync(new List<ActorDto>()
             {                  
@@ -36,7 +42,7 @@ namespace MovieApiTest.Controllers
                     BirthYear = 1969
                 }            });
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.GetActors();   
@@ -54,7 +60,7 @@ namespace MovieApiTest.Controllers
         public async Task GetActorAsync_ReturnsOkWithActor()
         {
             //Arrange
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.GetActorAsync(1))
             .ReturnsAsync(new ActorDto() 
                 {
@@ -63,7 +69,7 @@ namespace MovieApiTest.Controllers
                 }
                 );
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.GetActor(1);
@@ -79,11 +85,11 @@ namespace MovieApiTest.Controllers
         public async Task GetActorAsync_BadId_ReturnsNotFound()
         {
             //Arrange
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.GetActorAsync(99))
             .ReturnsAsync((ActorDto)null);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.GetActor(99);
@@ -102,7 +108,7 @@ namespace MovieApiTest.Controllers
             //Arrange
             var actorDto = new ActorDto() { Name = "Jim Carrey", BirthYear = 1962 };
 
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.AddActorAsync(actorDto))
             .ReturnsAsync(new Actor()
             {
@@ -112,7 +118,7 @@ namespace MovieApiTest.Controllers
             }
                 );
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.PostActor(actorDto);
@@ -131,11 +137,11 @@ namespace MovieApiTest.Controllers
             //Arrange
             ActorDto actorDto = null;
 
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.AddActorAsync(actorDto))
             .ReturnsAsync((Actor)null);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.PostActor(actorDto);
@@ -157,11 +163,11 @@ namespace MovieApiTest.Controllers
                 BirthYear = 1952
             };
 
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.UpdateActorAsync(5, newActorDto))
             .ReturnsAsync(true);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.PutActor(5, newActorDto);
@@ -180,11 +186,11 @@ namespace MovieApiTest.Controllers
                 BirthYear = 1952
             };
 
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.UpdateActorAsync(5, newActorDto))
             .ReturnsAsync(false);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.PutActor(5, newActorDto);
@@ -200,11 +206,11 @@ namespace MovieApiTest.Controllers
         public async Task DeleteActorAsync_ReturnNoContent()
         {
             //Arrange
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.DeleteActorAsync(5))
             .ReturnsAsync(true);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.DeleteActor(5);
@@ -217,11 +223,11 @@ namespace MovieApiTest.Controllers
         public async Task DeleteActorAsync_BadId_ReturnNotFound()
         {
             //Arrange
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.DeleteActorAsync(5))
             .ReturnsAsync(false);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.DeleteActor(5);
@@ -238,11 +244,11 @@ namespace MovieApiTest.Controllers
         public async Task AddActorToMovieAsync_ReturnNoContent() 
         {
             //Arrange
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.AddActorToMovieAsync(5, 3))
             .ReturnsAsync(true);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.AddActorToMovie(5, 3);
@@ -256,11 +262,11 @@ namespace MovieApiTest.Controllers
         public async Task AddActorToMovieAsync_BadId_ReturnNotFound()
         {
             //Arrange
-            var mockService = new Mock<IActorService>();
+            mockUnit.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.AddActorToMovieAsync(5, 3))
             .ReturnsAsync(false);
 
-            var controller = new ActorsController(mockService.Object);
+            var controller = new ActorsController(mockUnit.Object);
 
             //Act
             var result = await controller.AddActorToMovie(5, 3);
