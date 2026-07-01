@@ -7,12 +7,12 @@ using MovieApi.Interfaces;
 
 namespace MovieApi.Services
 {
-    public class MovieService : IMovieService
+    public class MovieRepository : IMovieService
     {
 
         private readonly IAppDbContext _context;
 
-        public MovieService(IAppDbContext context)
+        public MovieRepository(IAppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

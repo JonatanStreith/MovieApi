@@ -6,12 +6,12 @@ using MovieApi.Interfaces;
 
 namespace MovieApi.Services
 {
-    public class ActorService : IActorService
+    public class ActorRepository : IActorService
     {
 
         private readonly IAppDbContext _context;
 
-        public ActorService(IAppDbContext context)
+        public ActorRepository(IAppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

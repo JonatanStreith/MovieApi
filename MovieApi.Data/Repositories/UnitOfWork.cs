@@ -16,9 +16,9 @@ namespace MovieApi.Data.Services
         public UnitOfWork(MovieApiContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            Movies = new MovieService(context);
-            Reviews = new ReviewService(context);
-            Actors = new ActorService(context);
+            Movies = new MovieRepository(context);
+            Reviews = new ReviewRepository(context);
+            Actors = new ActorRepository(context);
         }
 
         public IMovieService Movies { get; }

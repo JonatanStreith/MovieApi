@@ -7,12 +7,12 @@ using MovieApi.Models;
 
 namespace MovieApi.Services
 {
-    public class ReviewService : IReviewService
+    public class ReviewRepository : IReviewService
     {
 
         private readonly IAppDbContext _context;
 
-        public ReviewService(IAppDbContext context)
+        public ReviewRepository(IAppDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
