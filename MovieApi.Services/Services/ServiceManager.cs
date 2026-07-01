@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MovieApi.Services.Services
 {
-    internal class ServiceManager : IServiceManager
+    public class ServiceManager : IServiceManager
     {
 
         public ServiceManager(IUnitOfWork context)
