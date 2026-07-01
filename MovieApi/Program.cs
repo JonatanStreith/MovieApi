@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using MovieApi.Contexts;
+using MovieApi.Core.Interfaces;
+using MovieApi.Data.Services;
 using MovieApi.Interfaces;
 using MovieApi.Services;
 using System.Text;
@@ -22,10 +24,7 @@ namespace MovieApi
 
             builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<MovieApiContext>());
 
-            builder.Services.AddScoped<IMovieService, MovieService>();
-            builder.Services.AddScoped<IActorService, ActorService>();
-            builder.Services.AddScoped<IReviewService, ReviewService>();
-
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddControllers();
 
