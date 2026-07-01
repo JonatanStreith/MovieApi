@@ -12,7 +12,7 @@ namespace MovieApi.Controllers
     public class ReviewsController : ControllerBase
     {
 
-        private readonly IReviewService _reviewService;
+        private readonly IReviewRepository _reviewService;
         public ReviewsController(IUnitOfWork unitOfWork)
         {
             _reviewService = unitOfWork.Reviews ??

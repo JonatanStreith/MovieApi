@@ -4,7 +4,7 @@ using MovieApi.Models;
 
 namespace MovieApi.Interfaces
 {
-    public interface IMovieService
+    public interface IMovieRepository
     {
 
         Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year);

@@ -11,7 +11,7 @@ namespace MovieApi.Controllers
     [ApiController]
     public class ActorsController : ControllerBase
     {
-        private readonly IActorService _actorService;
+        private readonly IActorRepository _actorService;
         public ActorsController(IUnitOfWork unitOfWork)
         {
             _actorService = unitOfWork.Actors ??

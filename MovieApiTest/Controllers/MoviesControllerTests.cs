@@ -14,7 +14,7 @@ namespace MovieApiTest.Controllers
     public class MoviesControllerTests
     {
 
-        Mock<IMovieService> mockService = new Mock<IMovieService>();        //The service we mock
+        Mock<IMovieRepository> mockService = new Mock<IMovieRepository>();        //The service we mock
         Mock<IUnitOfWork> mockUnit = new Mock<IUnitOfWork>();
             
             

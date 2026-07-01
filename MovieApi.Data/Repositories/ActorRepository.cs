@@ -6,7 +6,7 @@ using MovieApi.Interfaces;
 
 namespace MovieApi.Services
 {
-    public class ActorRepository : IActorService
+    public class ActorRepository : IActorRepository
     {
 
         private readonly IAppDbContext _context;

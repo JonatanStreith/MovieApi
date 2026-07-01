@@ -7,7 +7,7 @@ using MovieApi.Models;
 
 namespace MovieApi.Services
 {
-    public class ReviewRepository : IReviewService
+    public class ReviewRepository : IReviewRepository
     {
 
         private readonly IAppDbContext _context;

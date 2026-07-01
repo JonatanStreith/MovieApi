@@ -14,7 +14,7 @@ namespace MovieApiTest.Controllers
     public class ActorsControllerTests
     {
 
-        Mock<IActorService> mockService = new Mock<IActorService>();
+        Mock<IActorRepository> mockService = new Mock<IActorRepository>();
         Mock<IUnitOfWork> mockUnit = new Mock<IUnitOfWork>();
 
 

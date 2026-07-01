@@ -21,11 +21,11 @@ namespace MovieApi.Data.Services
             Actors = new ActorRepository(context);
         }
 
-        public IMovieService Movies { get; }
+        public IMovieRepository Movies { get; }
 
-        public IReviewService Reviews { get; }
+        public IReviewRepository Reviews { get; }
 
-        public IActorService Actors { get; }
+        public IActorRepository Actors { get; }
 
         public async Task<bool> CompleteAsync()
         {

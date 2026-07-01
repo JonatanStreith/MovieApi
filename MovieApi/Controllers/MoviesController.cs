@@ -10,7 +10,7 @@ using MovieApi.Models;
 [ApiController]
 public class MoviesController : ControllerBase
 {
-    private readonly IMovieService _movieService;
+    private readonly IMovieRepository _movieService;
     public MoviesController(IUnitOfWork unitOfWork)
     {
         _movieService = unitOfWork.Movies ??

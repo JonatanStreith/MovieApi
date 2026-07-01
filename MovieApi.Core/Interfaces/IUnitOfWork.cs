@@ -8,9 +8,9 @@ namespace MovieApi.Core.Interfaces
     public interface IUnitOfWork
     {
 
-        IMovieService Movies { get; }
-        IReviewService Reviews { get; }
-        IActorService Actors { get; }
+        IMovieRepository Movies { get; }
+        IReviewRepository Reviews { get; }
+        IActorRepository Actors { get; }
         Task<bool> CompleteAsync();
     }
 }

@@ -7,7 +7,7 @@ using MovieApi.Interfaces;
 
 namespace MovieApi.Services
 {
-    public class MovieRepository : IMovieService
+    public class MovieRepository : IMovieRepository
     {
 
         private readonly IAppDbContext _context;

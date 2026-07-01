@@ -14,7 +14,7 @@ namespace MovieApiTest.Controllers
     public class ReviewsControllerTests
     {
 
-        Mock<IReviewService> mockService = new Mock<IReviewService>();
+        Mock<IReviewRepository> mockService = new Mock<IReviewRepository>();
         Mock<IUnitOfWork> mockUnit = new Mock<IUnitOfWork>();
 
 

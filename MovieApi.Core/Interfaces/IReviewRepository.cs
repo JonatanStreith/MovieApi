@@ -4,7 +4,7 @@ using MovieApi.Models;
 
 namespace MovieApi.Interfaces
 {
-    public interface IReviewService
+    public interface IReviewRepository
     {
         Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto);
         Task<bool> DeleteReviewAsync(int id);
