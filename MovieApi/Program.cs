@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using MovieApi.Contexts;
+using MovieApi.Contracts.Contracts;
 using MovieApi.Core.Interfaces;
 using MovieApi.Data.Services;
 using MovieApi.Interfaces;
 using MovieApi.Services;
+using MovieApi.Services.Services;
 using System.Text;
 
 namespace MovieApi
@@ -24,7 +26,8 @@ namespace MovieApi
 
             builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<MovieApiContext>());
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
             builder.Services.AddControllers();
 
