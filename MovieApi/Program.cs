@@ -26,7 +26,7 @@ namespace MovieApi
 
             builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<MovieApiContext>());
 
-            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
             builder.Services.AddControllers();
