@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
@@ -11,10 +12,10 @@ namespace MovieApi.Controllers
     public class ActorsController : ControllerBase
     {
         private readonly IActorService _actorService;
-        public ActorsController(IActorService actorService)
+        public ActorsController(IUnitOfWork unitOfWork)
         {
-            _actorService = actorService ??
-                    throw new ArgumentNullException(nameof(actorService)); ;
+            _actorService = unitOfWork.Actors ??
+                    throw new ArgumentNullException(nameof(unitOfWork.Actors)); ;
         }
 
         //GET /api/actors

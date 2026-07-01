@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
@@ -10,10 +11,10 @@ using MovieApi.Models;
 public class MoviesController : ControllerBase
 {
     private readonly IMovieService _movieService;
-    public MoviesController(IMovieService movieService)
+    public MoviesController(IUnitOfWork unitOfWork)
     {
-        _movieService = movieService ??
-                throw new ArgumentNullException(nameof(movieService)); ;
+        _movieService = unitOfWork.Movies ??
+                throw new ArgumentNullException(nameof(unitOfWork.Movies)); ;
     }
 
     // GET: api/movies
@@ -34,7 +35,7 @@ public class MoviesController : ControllerBase
 
         if (movie == null)
         {
-            return NotFound($"The movie with the id {id} couldn't be faund.");
+            return NotFound($"The movie with the id {id} couldn't be found.");
         }
 
         return Ok(movie);
