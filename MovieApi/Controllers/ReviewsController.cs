@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MovieApi.Contracts.Contracts;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -12,11 +13,11 @@ namespace MovieApi.Controllers
     public class ReviewsController : ControllerBase
     {
 
-        private readonly IReviewRepository _reviewService;
-        public ReviewsController(IUnitOfWork unitOfWork)
+        private readonly IReviewService _reviewService;
+        public ReviewsController(IServiceManager manager)
         {
-            _reviewService = unitOfWork.Reviews ??
-                    throw new ArgumentNullException(nameof(unitOfWork.Reviews)); ;
+            _reviewService = manager.Reviews ??
+                    throw new ArgumentNullException(nameof(manager.Reviews)); ;
         }
 
         //GET /api/movies/{movieId}/reviews

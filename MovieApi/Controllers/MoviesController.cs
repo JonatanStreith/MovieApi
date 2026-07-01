@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MovieApi.Contracts.Contracts;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -10,11 +11,11 @@ using MovieApi.Models;
 [ApiController]
 public class MoviesController : ControllerBase
 {
-    private readonly IMovieRepository _movieService;
-    public MoviesController(IUnitOfWork unitOfWork)
+    private readonly IMovieService _movieService;
+    public MoviesController(IServiceManager manager)
     {
-        _movieService = unitOfWork.Movies ??
-                throw new ArgumentNullException(nameof(unitOfWork.Movies)); ;
+        _movieService = manager.Movies ??
+                throw new ArgumentNullException(nameof(manager.Movies)); ;
     }
 
     // GET: api/movies
