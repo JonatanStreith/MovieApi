@@ -10,7 +10,7 @@ using System.Text;
 namespace MovieApi.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -19,6 +19,13 @@ namespace MovieApi.Controllers
         {
             _configuration = configuration;
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("This endpoint works");
+        }
+
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel model)
