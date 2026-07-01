@@ -11,6 +11,6 @@ namespace MovieApi.Core.Interfaces
         IMovieService Movies { get; }
         IReviewService Reviews { get; }
         IActorService Actors { get; }
-        Task CompleteAsync();
+        Task<bool> CompleteAsync();
     }
 }
