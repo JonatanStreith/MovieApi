@@ -39,6 +39,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MovieApi.Data\MovieApi.Data.csproj" />
+    <ProjectReference Include="..\MovieApi.Presentation\MovieApi.Presentation.csproj" />
+    <ProjectReference Include="..\MovieApi.Services\MovieApi.Services.csproj" />
   </ItemGroup>
 
 </Project>

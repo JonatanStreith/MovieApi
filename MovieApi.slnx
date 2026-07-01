@@ -1,6 +1,9 @@
 <Solution>
+  <Project Path="MovieApi.Contracts/MovieApi.Contracts.csproj" Id="10375b63-93d7-4be9-8615-0bba3e737c78" />
   <Project Path="MovieApi.Core/MovieApi.Core.csproj" Id="6a7de04a-0a5d-4a42-a2c6-a788703153cf" />
   <Project Path="MovieApi.Data/MovieApi.Data.csproj" Id="77b55ea9-c198-4d8e-9e56-131db11707c0" />
+  <Project Path="MovieApi.Presentation/MovieApi.Presentation.csproj" Id="5138c96c-814c-4356-828d-7c1772a41e85" />
+  <Project Path="MovieApi.Services/MovieApi.Services.csproj" Id="fb36e49a-b825-4029-9fa0-c5f1ca98d6aa" />
   <Project Path="MovieApi/MovieApi.csproj" />
   <Project Path="MovieApiTest/MovieApiTest.csproj" Id="d5825c58-ce2a-41f6-b018-fb8978cf3156" />
 </Solution>
