@@ -17,6 +17,25 @@ namespace MovieApi.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year)
+        {
+            var movies = _context.Movies.AsQueryable();
+
+            if (genre != null)
+            {
+                movies = movies.Where(movie => movie.Genre == genre);
+            }
+
+            if (year != null)
+            {
+                movies = movies.Where(movie => movie.Year == year);
+            }
+
+            return await movies.OrderBy(m => m.Title)
+                .Select(movie => ConvertMovieToDto(movie)).ToListAsync();
+        }
+
+
         public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, int pageSize, int page)
         {
             var movies = _context.Movies.AsQueryable();

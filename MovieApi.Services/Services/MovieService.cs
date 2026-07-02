@@ -42,6 +42,10 @@ namespace MovieApi.Services.Services
             return _movies.GetMovieDetailsAsync(movieId);
         }
 
+        public Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year)
+        {
+            return _movies.GetMoviesAsync(genre, year);
+        }
         public Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, int pageSize, int page)
         {
             return _movies.GetMoviesAsync(genre, year, pageSize, page);
