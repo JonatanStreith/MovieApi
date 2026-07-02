@@ -7,7 +7,7 @@ namespace MovieApi.Interfaces
     public interface IMovieRepository
     {
 
-        Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year);
+        Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, int pageSize = 10, int page = 1);
         Task<MovieDto?> GetMovieAsync(int id, bool fullData);
         Task<MovieDetails> GetMovieDetailsAsync(int movieId);
         Task<Movie> AddMovieAsync(MovieCreateDto dto);

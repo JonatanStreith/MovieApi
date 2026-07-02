@@ -20,9 +20,11 @@ public class MoviesController : ControllerBase
 
     // GET: api/movies
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year)
+    public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year, int pageSize = 10, int page = 1)
     {
-        var movies = await _movieService.GetMoviesAsync(genre, year);
+        if (pageSize < 10 || pageSize > 100 || page < 1) return BadRequest("Illegitimate paging parameters.");
+
+        var movies = await _movieService.GetMoviesAsync(genre, year, pageSize, page);
 
 
         return Ok(movies);
