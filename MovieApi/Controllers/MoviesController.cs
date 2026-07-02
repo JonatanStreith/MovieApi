@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,8 +8,11 @@ using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
 
-[Route("api/movies")]
+[Route("api/v{version:apiVersion}/movies")]
 [ApiController]
+
+[ApiVersion("1.0")]
+[ApiVersion("2.0")]
 public class MoviesController : ControllerBase
 {
     private readonly IMovieService _movieService;
@@ -20,6 +24,7 @@ public class MoviesController : ControllerBase
 
     // GET: api/movies
     [HttpGet]
+    [MapToApiVersion("1.0")]        //This ensures it's the one accessed when we use v1.0
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year, int pageSize = 10, int page = 1)
     {
         if (pageSize < 10 || pageSize > 100 || page < 1) return BadRequest("Illegitimate paging parameters.");

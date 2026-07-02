@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -31,6 +32,22 @@ namespace MovieApi
 
             builder.Services.AddControllers();
 
+            builder.Services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);	// anger att standardversionen är v1.0.
+                options.AssumeDefaultVersionWhenUnspecified = true;	// gör att anrop utan angiven version använder standardversionen.
+
+                options.ReportApiVersions = true;			        // gör att API: t skickar versionsinformation i responsheaders.
+            })
+            .AddApiExplorer(options =>                              // Med AddApiExplorer(...) kan Swagger hitta och gruppera varje version korrekt.
+            {
+                options.GroupNameFormat = "'v'VVV";                 // hur versionsgruppen ska heta.
+                options.SubstituteApiVersionInUrl = true;           // ersätt version-placeholdern i URL:en med riktig version.
+            });							                            // Tillsammans gör de att Swagger kan visa v1 och v2 snyggt och separat.
+
+
+
+
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(options =>
@@ -51,6 +68,20 @@ namespace MovieApi
                 {
                     [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
                 });
+
+
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Products API",
+                    Version = "v1"
+                });
+
+                options.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "Products API",
+                    Version = "v2"
+                });
+
             });
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -73,7 +104,7 @@ namespace MovieApi
             );
 
             builder.Services.AddAuthorization();
-            
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -84,7 +115,12 @@ namespace MovieApi
             {
                 app.MapOpenApi();
                 app.UseSwagger();
-                app.UseSwaggerUI();
+
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Products API v1");
+                    options.SwaggerEndpoint("/swagger/v2/swagger.json", "Products API v2");
+                });
             }
 
             app.UseHttpsRedirection();
