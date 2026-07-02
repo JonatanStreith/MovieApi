@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using MovieApi.Contracts.Contracts;
 using MovieApi.Controllers;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
@@ -14,17 +15,16 @@ namespace MovieApiTest.Controllers
     public class ReviewsControllerTests
     {
 
-        Mock<IReviewRepository> mockService = new Mock<IReviewRepository>();
-        Mock<IUnitOfWork> mockUnit = new Mock<IUnitOfWork>();
+        Mock<IServiceManager> mockManager = new Mock<IServiceManager>();
+        Mock<IReviewService> mockService = new Mock<IReviewService>();
 
-        /*
 
         //GetReviews
         [Fact]
         public async Task GetReviewsAsync_ReturnsOkWithReviews()
         {
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.GetReviewsAsync(1))
             .ReturnsAsync(new List<ReviewDto>()
             {
@@ -40,7 +40,7 @@ namespace MovieApiTest.Controllers
             mockService.Setup(s => s.MovieExists(1))
                 .Returns(true);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.GetReviews(1);
@@ -51,12 +51,13 @@ namespace MovieApiTest.Controllers
             Assert.NotEmpty(reviews);
             Assert.Equal("ReviewerGuy", reviews.First().ReviewerName);
         }
+                
 
         [Fact]
         public async Task GetReviewsAsync_NoSuchMovie_ReturnsNotFound()
         {
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.GetReviewsAsync(1))
             .ReturnsAsync(new List<ReviewDto>()
             {
@@ -72,7 +73,7 @@ namespace MovieApiTest.Controllers
             mockService.Setup(s => s.MovieExists(1))
                 .Returns(false);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.GetReviews(1);
@@ -91,7 +92,7 @@ namespace MovieApiTest.Controllers
             var reviewDto = new ReviewDto() { ReviewerName = "Someguy", Comment = "This is a comment", Rating = 5, MovieId = 1 };
 
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.AddReviewAsync(1, reviewDto))
             .ReturnsAsync(new Review()
             {
@@ -106,7 +107,7 @@ namespace MovieApiTest.Controllers
             mockService.Setup(s => s.MovieExists(1))
             .Returns(true);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.PostReview(1, reviewDto);
@@ -124,14 +125,14 @@ namespace MovieApiTest.Controllers
             ReviewDto reviewDto = null;
 
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.AddReviewAsync(1, reviewDto))
             .ReturnsAsync((Review)null);
 
             mockService.Setup(s => s.MovieExists(1))
             .Returns(true);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.PostReview(1, reviewDto);
@@ -148,14 +149,14 @@ namespace MovieApiTest.Controllers
             var reviewDto = new ReviewDto() { Comment = "This is a comment", Rating = 5, MovieId = 2 };
 
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.AddReviewAsync(1, reviewDto))
             .ReturnsAsync((Review)null);
 
             mockService.Setup(s => s.MovieExists(1))
             .Returns(true);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.PostReview(1, reviewDto);
@@ -172,11 +173,11 @@ namespace MovieApiTest.Controllers
             var reviewDto = new ReviewDto() { Comment = "This is a comment", Rating = 5, MovieId = 1 };
 
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.MovieExists(1))
             .Returns(false);
            
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.PostReview(1, reviewDto);
@@ -193,11 +194,11 @@ namespace MovieApiTest.Controllers
         {
 
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.DeleteReviewAsync(1))
             .ReturnsAsync(true);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.DeleteReview(1);
@@ -211,11 +212,11 @@ namespace MovieApiTest.Controllers
         {
 
             //Arrange
-            mockUnit.Setup(x => x.Reviews).Returns(mockService.Object);
+            mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.DeleteReviewAsync(1))
             .ReturnsAsync(false);
 
-            var controller = new ReviewsController(mockUnit.Object);
+            var controller = new ReviewsController(mockManager.Object);
 
             //Act
             var result = await controller.DeleteReview(1);
@@ -225,6 +226,5 @@ namespace MovieApiTest.Controllers
             var message = Assert.IsType<string>(nfResult.Value);
             Assert.Equal("No movie with id 1 exists in the database.", message);
         }
-        */
     }
 }
