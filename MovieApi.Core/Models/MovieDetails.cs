@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieApi.Models
 {
-    public class MovieDetails
+    public record MovieDetails
     {
         public int MovieDetailsId { get; set; }
 

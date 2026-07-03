@@ -2,7 +2,7 @@
 
 namespace MovieApi.Dtos
 {
-    public class MovieDto
+    public record MovieDto
     {
         [Required(ErrorMessage = "A name is required for the movie.")]
         [MaxLength(50)]

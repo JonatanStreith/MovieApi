@@ -2,7 +2,7 @@
 
 namespace MovieApi.Dtos
 {
-    public class ReviewDto
+    public record ReviewDto
     {
         [Required(ErrorMessage = "A name is required for the reviewer.")]
         [MaxLength(50)]

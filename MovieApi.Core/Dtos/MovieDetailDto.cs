@@ -2,7 +2,7 @@
 
 namespace MovieApi.Dtos
 {
-    public class MovieDetailDto
+    public record MovieDetailDto
     {
         [Required(ErrorMessage = "No Id for related movie provided.")]
         public int? MovieId { get; set; }

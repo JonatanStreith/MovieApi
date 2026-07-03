@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MovieApi.Models
 {
-    public class Review
+    public record Review
     {
         public int Id { get; set; }
 
@@ -13,8 +13,5 @@ namespace MovieApi.Models
 
         public int MovieId { get; set; }
         public string? MovieTitle { get; set; } 
-
-        //public Movie Movie { get; set; }
-
     }
 }
