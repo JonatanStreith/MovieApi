@@ -7,6 +7,7 @@ using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
 using System.Net.NetworkInformation;
+using System.Text.Json;
 
 namespace MovieApi.Controllers
 {
@@ -48,6 +49,12 @@ namespace MovieApi.Controllers
             if (paging.PageSize < 10 || paging.PageSize > 100 || paging.Page < 1) return BadRequest("Illegitimate paging parameters.");
 
             var reviews = await _reviewService.GetReviewsAsync(movieId, paging);
+
+            if (paging != null)
+            {
+                var meta = MetaDataDto.GetMeta(paging, reviews.Count());
+                Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(meta));
+            }
 
             return Ok(reviews);
         }

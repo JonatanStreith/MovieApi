@@ -7,6 +7,7 @@ using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
+using System.Text.Json;
 
 [Route("api/v{version:apiVersion}/movies")]
 [ApiController]
@@ -43,6 +44,12 @@ public class MoviesController : ControllerBase
 
         var movies = await _movieService.GetMoviesAsync(genre, year, paging);
 
+
+        if (paging != null)
+        {
+            var meta = MetaDataDto.GetMeta(paging, movies.Count());
+            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(meta));
+        }
 
         return Ok(movies);
     }

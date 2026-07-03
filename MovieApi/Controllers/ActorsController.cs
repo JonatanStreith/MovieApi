@@ -7,6 +7,7 @@ using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
 using System.Net.NetworkInformation;
+using System.Text.Json;
 
 namespace MovieApi.Controllers
 {
@@ -45,6 +46,11 @@ namespace MovieApi.Controllers
 
             var actors = await _actorService.GetActorsAsync(paging);
 
+            if (paging != null)
+            {
+                var meta = MetaDataDto.GetMeta(paging, actors.Count());
+                Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(meta));
+            }
 
             return Ok(actors);
         }
