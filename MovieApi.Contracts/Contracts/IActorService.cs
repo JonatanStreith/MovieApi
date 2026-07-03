@@ -10,6 +10,7 @@ namespace MovieApi.Contracts.Contracts
     {
         Task<IEnumerable<ActorDto>> GetActorsAsync();
 
+        Task<IEnumerable<ActorDto>> GetActorsAsync(int pageSize, int page);
 
         Task<ActorDto> GetActorAsync(int id);
 

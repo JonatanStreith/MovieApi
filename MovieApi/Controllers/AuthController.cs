@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,9 @@ namespace MovieApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;

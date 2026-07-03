@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Contracts.Contracts;
 using MovieApi.Core.Interfaces;
@@ -10,6 +11,10 @@ namespace MovieApi.Controllers
 {
     [Route("api/actors")]
     [ApiController]
+
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+
     public class ActorsController : ControllerBase
     {
         private readonly IActorService _actorService;
@@ -21,9 +26,21 @@ namespace MovieApi.Controllers
 
         //GET /api/actors
         [HttpGet]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors()
         {
             var actors = await _actorService.GetActorsAsync();
+
+
+            return Ok(actors);
+        }
+
+        //GET /api/actors
+        [HttpGet]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors(int pageSize = 10, int page = 1)
+        {
+            var actors = await _actorService.GetActorsAsync(pageSize = 10, page = 1);
 
 
             return Ok(actors);

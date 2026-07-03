@@ -36,6 +36,11 @@ namespace MovieApi.Services.Services
             return _reviews.GetReviewsAsync(movieId);
         }
 
+        public Task<IEnumerable<ReviewDto>> GetReviewsAsync(int movieId, int pageSize, int page)
+        {
+            return _reviews.GetReviewsAsync(movieId, pageSize, page);
+        }
+
         public bool MovieExists(int? id)
         {
             return _reviews.MovieExists(id);

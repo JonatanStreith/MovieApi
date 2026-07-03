@@ -25,6 +25,18 @@ public class MoviesController : ControllerBase
     // GET: api/movies
     [HttpGet]
     [MapToApiVersion("1.0")]        //This ensures it's the one accessed when we use v1.0
+    public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year)
+    {
+
+        var movies = await _movieService.GetMoviesAsync(genre, year);
+
+
+        return Ok(movies);
+    }
+
+    // GET: api/movies
+    [HttpGet]
+    [MapToApiVersion("2.0")]        //This ensures it's the one accessed when we use v1.0
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year, int pageSize = 10, int page = 1)
     {
         if (pageSize < 10 || pageSize > 100 || page < 1) return BadRequest("Illegitimate paging parameters.");

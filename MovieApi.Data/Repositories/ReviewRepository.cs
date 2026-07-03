@@ -25,6 +25,15 @@ namespace MovieApi.Services
 
         }
 
+        public async Task<IEnumerable<ReviewDto>> GetReviewsAsync(int movieId, int pageSize, int page)
+        {
+
+            return await _context.Reviews.Where(review => review.MovieId == movieId).OrderBy(r => r.ReviewerName)
+                                                .Skip(pageSize * (page - 1)).Take(pageSize)
+                                                .Select(review => ConvertReviewToDto(review))
+                                                .ToListAsync();
+        }
+
         public async Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto)
         {
             var movie = await _context.Movies.FindAsync(movieId);

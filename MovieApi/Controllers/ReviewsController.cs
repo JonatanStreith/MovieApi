@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Contracts.Contracts;
 using MovieApi.Core.Interfaces;
@@ -10,6 +11,10 @@ namespace MovieApi.Controllers
 {
     [Route("api/reviews")]
     [ApiController]
+
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+
     public class ReviewsController : ControllerBase
     {
 
@@ -22,15 +27,28 @@ namespace MovieApi.Controllers
 
         //GET /api/movies/{movieId}/reviews
         [HttpGet("/api/movies/{movieId}/reviews")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(int movieId)
         {
             if (!_reviewService.MovieExists(movieId)) return NotFound($"No movie with id {movieId} exists in the database.");
 
             var reviews = await _reviewService.GetReviewsAsync(movieId);
 
+            return Ok(reviews);
+        }
+
+        //GET /api/movies/{movieId}/reviews
+        [HttpGet("/api/movies/{movieId}/reviews")]
+        [MapToApiVersion("2.0")]
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(int movieId, int pageSize = 10, int page = 1)
+        {
+            if (!_reviewService.MovieExists(movieId)) return NotFound($"No movie with id {movieId} exists in the database.");
+
+            var reviews = await _reviewService.GetReviewsAsync(movieId, pageSize, page);
 
             return Ok(reviews);
         }
+
         //POST /api/movies/{movieId}/reviews
         [HttpPost("/api/movies/{movieId}/reviews")]
         public async Task<ActionResult<Review>> PostReview(int movieId, ReviewDto reviewDto)
