@@ -6,7 +6,7 @@ namespace MovieApi.Interfaces
     public interface IActorRepository
     {
         Task<IEnumerable<ActorDto>> GetActorsAsync();
-        Task<IEnumerable<ActorDto>> GetActorsAsync(int pageSize, int page);
+        Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging);
 
         Task<ActorDto> GetActorAsync(int id);
 

@@ -50,9 +50,9 @@ namespace MovieApi.Services.Services
         {
             return _actors.GetActorsAsync();
         }
-        public Task<IEnumerable<ActorDto>> GetActorsAsync(int pageSize, int page)
+        public Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging)
         {
-            return _actors.GetActorsAsync(pageSize, page);
+            return _actors.GetActorsAsync(paging);
         }
 
         public Task<bool> SaveChangesAsync()

@@ -6,6 +6,7 @@ using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
+using System.Net.NetworkInformation;
 
 namespace MovieApi.Controllers
 {
@@ -40,11 +41,13 @@ namespace MovieApi.Controllers
         //GET /api/movies/{movieId}/reviews
         [HttpGet("/api/movies/{movieId}/reviews")]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews(int movieId, int pageSize = 10, int page = 1)
+        public async Task<ActionResult<IEnumerable<ReviewDto>>> GetReviews([FromQuery] int movieId, PagingDto paging)
         {
             if (!_reviewService.MovieExists(movieId)) return NotFound($"No movie with id {movieId} exists in the database.");
 
-            var reviews = await _reviewService.GetReviewsAsync(movieId, pageSize, page);
+            if (paging.PageSize < 10 || paging.PageSize > 100 || paging.Page < 1) return BadRequest("Illegitimate paging parameters.");
+
+            var reviews = await _reviewService.GetReviewsAsync(movieId, paging);
 
             return Ok(reviews);
         }

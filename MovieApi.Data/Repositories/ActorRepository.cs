@@ -26,10 +26,10 @@ namespace MovieApi.Services
             return actors.Select(actor => ConvertActorToDto(actor));
         }
 
-        public async Task<IEnumerable<ActorDto>> GetActorsAsync(int pageSize, int page)
+        public async Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging)
         {
             return await _context.Actors.OrderBy(a => a.Name)
-                                .Skip(pageSize * (page - 1)).Take(pageSize)
+                                .Skip(paging.PageSize * (paging.Page - 1)).Take(paging.PageSize)
                                 .Select(actor => ConvertActorToDto(actor))
                                 .ToListAsync();
         }

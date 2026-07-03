@@ -6,6 +6,7 @@ using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
+using System.Net.NetworkInformation;
 
 namespace MovieApi.Controllers
 {
@@ -38,9 +39,11 @@ namespace MovieApi.Controllers
         //GET /api/actors
         [HttpGet]
         [MapToApiVersion("2.0")]
-        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors(int pageSize = 10, int page = 1)
+        public async Task<ActionResult<IEnumerable<ActorDto>>> GetActors([FromQuery] PagingDto paging)
         {
-            var actors = await _actorService.GetActorsAsync(pageSize = 10, page = 1);
+            if (paging.PageSize < 10 || paging.PageSize > 100 || paging.Page < 1) return BadRequest("Illegitimate paging parameters.");
+
+            var actors = await _actorService.GetActorsAsync(paging);
 
 
             return Ok(actors);

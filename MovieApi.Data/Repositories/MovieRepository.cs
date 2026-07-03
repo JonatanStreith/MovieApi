@@ -36,7 +36,7 @@ namespace MovieApi.Services
         }
 
 
-        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, int pageSize, int page)
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, PagingDto paging)
         {
             var movies = _context.Movies.AsQueryable();
 
@@ -51,7 +51,7 @@ namespace MovieApi.Services
             }
 
             return await movies.OrderBy(m => m.Title)
-                .Skip(pageSize*(page-1)).Take(pageSize)
+                .Skip(paging.PageSize * (paging.Page - 1)).Take(paging.PageSize)
                 .Select(movie => ConvertMovieToDto(movie)).ToListAsync();
         }
 

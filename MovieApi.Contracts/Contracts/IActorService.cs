@@ -2,6 +2,7 @@
 using MovieApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace MovieApi.Contracts.Contracts
@@ -10,7 +11,7 @@ namespace MovieApi.Contracts.Contracts
     {
         Task<IEnumerable<ActorDto>> GetActorsAsync();
 
-        Task<IEnumerable<ActorDto>> GetActorsAsync(int pageSize, int page);
+        Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging);
 
         Task<ActorDto> GetActorAsync(int id);
 

@@ -46,9 +46,9 @@ namespace MovieApi.Services.Services
         {
             return _movies.GetMoviesAsync(genre, year);
         }
-        public Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, int pageSize, int page)
+        public Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, PagingDto paging)
         {
-            return _movies.GetMoviesAsync(genre, year, pageSize, page);
+            return _movies.GetMoviesAsync(genre, year, paging);
         }
 
         public bool MovieExists(int? id)
