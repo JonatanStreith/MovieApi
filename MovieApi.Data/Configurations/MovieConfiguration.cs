@@ -26,10 +26,6 @@ namespace MovieApi.Configurations
             builder.Property(m => m.Year)
                     .HasColumnType("int")
                     ;
-            builder.Property(m => m.Genre)
-                    .HasMaxLength(50)
-                    .HasColumnType("nvarchar")
-                    ;
             builder.Property(m => m.Duration)
                     .HasColumnType("int")
                     ;
