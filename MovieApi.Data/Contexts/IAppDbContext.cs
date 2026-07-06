@@ -10,6 +10,7 @@ namespace MovieApi.Contexts
             DbSet<MovieApi.Models.Review> Reviews { get; set; }
             DbSet<MovieApi.Models.MovieActor> MovieActors { get; set; }
             DbSet<MovieApi.Models.Actor> Actors { get; set; }
+            DbSet<MovieApi.Models.Genre> Genres { get; set; }
 
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

@@ -11,6 +11,7 @@ namespace MovieApi.Contexts
         public DbSet<MovieApi.Models.Review> Reviews { get; set; } = default!;
         public DbSet<MovieApi.Models.MovieActor> MovieActors { get; set; } = default!;
         public DbSet<MovieApi.Models.Actor> Actors { get; set; } = default!;
+        public DbSet<MovieApi.Models.Genre> Genres { get; set; } = default!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
