@@ -263,7 +263,7 @@ namespace MovieApiTest.Controllers
             {
                 MovieId = 89,
                 Title = newMovieDto.Title,
-                Genre = newMovieDto.Genre,
+                Genre = new Genre() { GenreId = 6, Name = "animation"},
                 Year = newMovieDto.Year,
                 Duration = newMovieDto.Duration,
                 MovieDetails = new MovieDetails()

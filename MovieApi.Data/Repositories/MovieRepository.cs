@@ -17,9 +17,11 @@ namespace MovieApi.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year)
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genreName, int? year)
         {
             var movies = _context.Movies.AsQueryable();
+
+            Genre genre = _context.Genres.FirstOrDefault(g => g.Name == genreName);
 
             if (genre != null)
             {
@@ -36,9 +38,11 @@ namespace MovieApi.Services
         }
 
 
-        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genre, int? year, PagingDto paging)
+        public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genreName, int? year, PagingDto paging)
         {
             var movies = _context.Movies.AsQueryable();
+
+            Genre genre = _context.Genres.FirstOrDefault(g => g.Name == genreName);
 
             if (genre != null)
             {
@@ -83,7 +87,7 @@ namespace MovieApi.Services
             {
                 Title = movie.Title,
                 Year = movie.Year,
-                Genre = movie.Genre,
+                Genre = movie.Genre.Name,
                 Duration = movie.Duration
             };
 
@@ -114,7 +118,7 @@ namespace MovieApi.Services
             {
                 Title = movie.Title,
                 Year = movie.Year,
-                Genre = movie.Genre,
+                Genre = movie.Genre.Name,
                 Duration = movie.Duration
             };
 
@@ -138,7 +142,7 @@ namespace MovieApi.Services
             {
                 Title = dto.Title,
                 Year = dto.Year,
-                Genre = dto.Genre,
+                Genre = await _context.Genres.FirstOrDefaultAsync(g=>g.Name == dto.Genre),
                 Duration = dto.Duration
             };
 
@@ -157,7 +161,7 @@ namespace MovieApi.Services
 
             movie.Title = dto.Title;
             movie.Year = dto.Year;
-            movie.Genre = dto.Genre;
+            movie.Genre = await _context.Genres.FirstOrDefaultAsync(g => g.Name == dto.Genre);
             movie.Duration = dto.Duration;
 
             //_context.Entry(movie).State = EntityState.Modified;
@@ -234,13 +238,13 @@ namespace MovieApi.Services
             };
         }
 
-        public static Movie ConvertDtoToMovie(MovieDto dto)
+        public static Movie ConvertDtoToMovie(MovieDto dto, Genre genre)
         {
             var movie = new Movie()
             {
                 Title = dto.Title,
                 Year = dto.Year,
-                Genre = dto.Genre,
+                Genre = genre,
                 Duration = dto.Duration
             };
 
@@ -251,5 +255,6 @@ namespace MovieApi.Services
         {
             return _context.Movies.Any(e => e.MovieId == id);
         }
+
     }
 }
