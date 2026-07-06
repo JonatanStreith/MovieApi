@@ -44,7 +44,7 @@ public class MoviesController : ControllerBase
 
         var movies = await _movieService.GetMoviesAsync(genre, year, paging);
 
-
+        
         if (paging != null)
         {
             var meta = MetaDataDto.GetMeta(paging, movies.Count());
