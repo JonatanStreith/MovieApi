@@ -9,7 +9,7 @@ namespace MovieApi.Data.Configurations
 {
     internal class GenreConfiguration : IEntityTypeConfiguration<Genre>
     {
-            {
+            
         public void Configure(EntityTypeBuilder<Genre> builder)
         {
             builder.HasKey(g => g.GenreId);
@@ -53,4 +53,4 @@ namespace MovieApi.Data.Configurations
 
 
 }
-}
+

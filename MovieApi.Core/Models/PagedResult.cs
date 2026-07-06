@@ -10,7 +10,7 @@ namespace MovieApi.Models
         public IEnumerable<T> Data { get; set; }
 
         public MetaDataDto Meta { get; set; }
-    }
+    
 
     public PagedResult(IEnumerable<T> data, MetaDataDto meta)
         {
