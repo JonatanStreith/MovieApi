@@ -44,7 +44,7 @@ namespace MovieApi.Configurations
                     Rating = 5,
                     Comment = "OMIGOD THIS IS THE BEST MOVIE EVER!",
                     MovieId = 1,
-                    MovieTitle = "Aron Man 1"
+                    MovieTitle = "Iron Man 1"
                 },
                 new Review()
                 {
@@ -53,7 +53,7 @@ namespace MovieApi.Configurations
                     Rating = 1,
                     Comment = "A distasteful look into the horrifying military complex. Also, Marvel just keeps pumping these out. This is, what, the fifth one in the series?",
                     MovieId = 1,
-                    MovieTitle = "Bron Man 1"
+                    MovieTitle = "Iron Man 1"
                 },
                 new Review()
                 {
@@ -62,7 +62,7 @@ namespace MovieApi.Configurations
                     Rating = 5,
                     Comment = "Tony looks so hot in this one. Shame about the ending. I wrote a fanfic that fixed everything, read it at http://wwwfanfic.con/340694hgio/a/",
                     MovieId = 3,
-                    MovieTitle = "Cron Man 3"
+                    MovieTitle = "Iron Man 3"
                 },
                 new Review()
                 {
@@ -71,7 +71,7 @@ namespace MovieApi.Configurations
                     Rating = 5,
                     Comment = "A fascinating adaptation of long-running comics continuity adapted into film. A shame TONY DIES IN ENDGAME!",
                     MovieId = 1,
-                    MovieTitle = "Dron Man 1"
+                    MovieTitle = "Iron Man 1"
                 },
                 new Review()
                 {
@@ -80,7 +80,7 @@ namespace MovieApi.Configurations
                     Rating = 4,
                     Comment = "Are all these reviews made up? Whatever. I liked the movie.",
                     MovieId = 2,
-                    MovieTitle = "Eron Man 2"
+                    MovieTitle = "Iron Man 2"
                 }
 
 
