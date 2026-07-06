@@ -8,11 +8,11 @@ namespace MovieApi.Models
         public int MovieId { get; set; }
         public string? Title { get; set; }
         public int Year {  get; set; }
-        public string? Genre { get; set; }
         public int Duration { get; set; }
 
         public MovieDetails? MovieDetails { get; set; }
-
+        public Genre? Genre { get; set; }
+        public int ? GenreId { get; set; } = null;
         public ICollection<Review>? Reviews { get; set; } = new List<Review>();
 
         public ICollection<MovieActor> MovieActor { get; set; } = new List<MovieActor>();
