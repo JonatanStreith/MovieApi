@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.EventHandlers;
 using Moq;
 using MovieApi.Contracts.Contracts;
 using MovieApi.Controllers;
+using MovieApi.Core;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -248,7 +249,7 @@ namespace MovieApiTest.Controllers
             //Arrange
             mockManager.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.AddActorToMovieAsync(5, 3))
-            .ReturnsAsync(true);
+            .ReturnsAsync(Flag.OK);
 
             var controller = new ActorsController(mockManager.Object);
 
@@ -266,7 +267,7 @@ namespace MovieApiTest.Controllers
             //Arrange
             mockManager.Setup(x => x.Actors).Returns(mockService.Object);
             mockService.Setup(s => s.AddActorToMovieAsync(5, 3))
-            .ReturnsAsync(false);
+            .ReturnsAsync(Flag.Movie_Not_Found);
 
             var controller = new ActorsController(mockManager.Object);
 
@@ -276,7 +277,7 @@ namespace MovieApiTest.Controllers
             //Assert
             var nfResult = Assert.IsType<NotFoundObjectResult>(result.Result);
             var message = Assert.IsType<string>(nfResult.Value);
-            Assert.Equal("Movie 5 and/or actor 3 not found.", message);
+            Assert.Equal("Movie 5 not found.", message);
         }
     }
 }

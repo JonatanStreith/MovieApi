@@ -2,6 +2,7 @@
 using Moq;
 using MovieApi.Contracts.Contracts;
 using MovieApi.Controllers;
+using MovieApi.Core;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -94,7 +95,7 @@ namespace MovieApiTest.Controllers
             //Arrange
             mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.AddReviewAsync(1, reviewDto))
-            .ReturnsAsync(new Review()
+            .ReturnsAsync((new Review()
             {
                 
                     ReviewerName= "ReviewerGuy",
@@ -102,7 +103,7 @@ namespace MovieApiTest.Controllers
                     Rating = 3,
                     MovieId = 1
                 
-            });
+            }, Flag.OK));
 
             mockService.Setup(s => s.MovieExists(1))
             .Returns(true);
@@ -127,7 +128,7 @@ namespace MovieApiTest.Controllers
             //Arrange
             mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.AddReviewAsync(1, reviewDto))
-            .ReturnsAsync((Review)null);
+            .ReturnsAsync(((Review)null, Flag.OK));
 
             mockService.Setup(s => s.MovieExists(1))
             .Returns(true);
@@ -151,7 +152,7 @@ namespace MovieApiTest.Controllers
             //Arrange
             mockManager.Setup(x => x.Reviews).Returns(mockService.Object);
             mockService.Setup(s => s.AddReviewAsync(1, reviewDto))
-            .ReturnsAsync((Review)null);
+            .ReturnsAsync(((Review)null, Flag.OK));
 
             mockService.Setup(s => s.MovieExists(1))
             .Returns(true);
