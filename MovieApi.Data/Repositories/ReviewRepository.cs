@@ -41,6 +41,8 @@ namespace MovieApi.Services
 
             if (movie.Reviews.Count >= 10) return (null, Flag.Too_Many_Reviews);
 
+            if (movie.Year < DateTime.Now.Year - 20 && movie.Reviews.Count >= 5) return (null, Flag.Too_Many_Reviews);
+
             var review = ConvertDtoToReview(reviewDto, movie.Title);
 
             movie.Reviews.Add(review);
