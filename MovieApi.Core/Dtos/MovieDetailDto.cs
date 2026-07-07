@@ -10,6 +10,7 @@ namespace MovieApi.Dtos
         public string? Synopsis { get; set; }
         [MaxLength(50)]
         public string? Language { get; set; }
+        [Range(0, int.MaxValue)]
         public int Budget { get; set; }
 
         public List<ReviewDto> Reviews { get; set; }
