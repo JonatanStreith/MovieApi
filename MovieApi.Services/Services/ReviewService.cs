@@ -1,4 +1,5 @@
 ﻿using MovieApi.Contracts.Contracts;
+using MovieApi.Core;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -21,7 +22,7 @@ namespace MovieApi.Services.Services
             _reviews = _unit.Reviews;
         }
 
-        public Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto)
+        public Task<(Review, Flag)> AddReviewAsync(int movieId, ReviewDto reviewDto)
         {
             return _reviews.AddReviewAsync(movieId, reviewDto);
         }

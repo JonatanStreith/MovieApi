@@ -1,4 +1,5 @@
-﻿using MovieApi.Dtos;
+﻿using MovieApi.Core;
+using MovieApi.Dtos;
 using MovieApi.Models;
 
 namespace MovieApi.Interfaces
@@ -12,7 +13,7 @@ namespace MovieApi.Interfaces
 
         Task<Actor> AddActorAsync(ActorDto actorDto);
 
-        Task<bool> AddActorToMovieAsync(int movieId, int actorId);
+        Task<Flag> AddActorToMovieAsync(int movieId, int actorId);
 
         Task<bool> UpdateActorAsync(int id, ActorDto actor);
 

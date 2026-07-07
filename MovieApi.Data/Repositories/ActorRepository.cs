@@ -3,6 +3,7 @@ using MovieApi.Models;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Contexts;
 using MovieApi.Interfaces;
+using MovieApi.Core;
 
 namespace MovieApi.Services
 {
@@ -58,12 +59,15 @@ namespace MovieApi.Services
             return actor;
         }
 
-        public async Task<bool> AddActorToMovieAsync(int movieId, int actorId)
+        public async Task<Flag> AddActorToMovieAsync(int movieId, int actorId)
         {
             var movie = await _context.Movies.FindAsync(movieId);
             var actor = await _context.Actors.FindAsync(actorId);
 
-            if (movie == null || actor == null) return false;
+            if (movie == null) return Flag.Movie_Not_Found;
+            if (actor == null) return Flag.Actor_Not_Found;
+
+            if (_context.MovieActors.Any(ma => ma.MovieId == movieId && ma.ActorId == actorId)) return Flag.MovieActor_Exists;
 
             var movAct = new MovieActor()
             {
@@ -78,7 +82,7 @@ namespace MovieApi.Services
 
             await SaveChangesAsync();
 
-            return true;
+            return Flag.OK;
         }
 
         public async Task<bool> UpdateActorAsync(int id, ActorDto dto)

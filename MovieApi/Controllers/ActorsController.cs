@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Contracts.Contracts;
+using MovieApi.Core;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -95,9 +96,11 @@ namespace MovieApi.Controllers
         [HttpPost("/api/movies/{movieId}/actors/{actorId}")]
         public async Task<ActionResult<bool>> AddActorToMovie(int movieId, int actorId)
         {
-            bool result = await _actorService.AddActorToMovieAsync(movieId, actorId);
+            Flag result = await _actorService.AddActorToMovieAsync(movieId, actorId);
 
-            if (!result) return NotFound($"Movie {movieId} and/or actor {actorId} not found.");
+            if (result == Flag.Movie_Not_Found) return NotFound($"Movie {movieId} not found.");
+            if (result == Flag.Actor_Not_Found) return NotFound($"Actor {actorId} not found.");
+            if (result == Flag.MovieActor_Exists) return NotFound($"That actor has already been added.");
 
             return NoContent();
 

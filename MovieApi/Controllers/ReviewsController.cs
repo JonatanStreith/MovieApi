@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Contracts.Contracts;
+using MovieApi.Core;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -67,9 +68,12 @@ namespace MovieApi.Controllers
 
             if(!_reviewService.MovieExists(movieId)) return BadRequest($"No movie with id {movieId} exists in the database.");
 
-            Review review = await _reviewService.AddReviewAsync(movieId, reviewDto);
+            (Review review, Flag flag) = await _reviewService.AddReviewAsync(movieId, reviewDto);
 
-            return CreatedAtAction("PostReview", new { id = review.Id }, review);
+            if (flag == Flag.OK) return CreatedAtAction("PostReview", new { id = review.Id }, review);
+            if (flag == Flag.Too_Many_Reviews) return BadRequest("The maximum number of allowed reviews has been reached already.");
+
+            else return BadRequest("Unexpected error.");
         }
 
 

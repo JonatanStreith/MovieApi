@@ -1,4 +1,5 @@
 ﻿using MovieApi.Contracts.Contracts;
+using MovieApi.Core;
 using MovieApi.Core.Interfaces;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
@@ -31,7 +32,7 @@ namespace MovieApi.Services.Services
             return _actors.AddActorAsync(actorDto);
         }
 
-        public Task<bool> AddActorToMovieAsync(int movieId, int actorId)
+        public Task<Flag> AddActorToMovieAsync(int movieId, int actorId)
         {
             return _actors.AddActorToMovieAsync(movieId, actorId);
         }

@@ -1,6 +1,7 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Contexts;
+using MovieApi.Core;
 using MovieApi.Dtos;
 using MovieApi.Interfaces;
 using MovieApi.Models;
@@ -34,9 +35,11 @@ namespace MovieApi.Services
                                                 .ToListAsync();
         }
 
-        public async Task<Review> AddReviewAsync(int movieId, ReviewDto reviewDto)
+        public async Task<(Review, Flag)> AddReviewAsync(int movieId, ReviewDto reviewDto)
         {
             var movie = await _context.Movies.FindAsync(movieId);
+
+            if (movie.Reviews.Count >= 10) return (null, Flag.Too_Many_Reviews);
 
             var review = ConvertDtoToReview(reviewDto, movie.Title);
 
@@ -46,7 +49,7 @@ namespace MovieApi.Services
 
             await SaveChangesAsync();
 
-            return review;
+            return (review, Flag.OK);
 
         }
 

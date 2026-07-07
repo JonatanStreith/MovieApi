@@ -1,4 +1,5 @@
-﻿using MovieApi.Dtos;
+﻿using MovieApi.Core;
+using MovieApi.Dtos;
 using MovieApi.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace MovieApi.Contracts.Contracts
 
         Task<Actor> AddActorAsync(ActorDto actorDto);
 
-        Task<bool> AddActorToMovieAsync(int movieId, int actorId);
+        Task<Flag> AddActorToMovieAsync(int movieId, int actorId);
 
         Task<bool> UpdateActorAsync(int id, ActorDto actor);
 
