@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Readme.md" />
+  </Folder>
   <Project Path="MovieApi.Contracts/MovieApi.Contracts.csproj" Id="10375b63-93d7-4be9-8615-0bba3e737c78" />
   <Project Path="MovieApi.Core/MovieApi.Core.csproj" Id="6a7de04a-0a5d-4a42-a2c6-a788703153cf" />
   <Project Path="MovieApi.Data/MovieApi.Data.csproj" Id="77b55ea9-c198-4d8e-9e56-131db11707c0" />
