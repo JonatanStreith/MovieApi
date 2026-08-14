@@ -69,6 +69,7 @@ namespace MovieApi.Services
                     .Include(movie => movie.MovieDetails)
                     .Include(movie => movie.Reviews)
                     .Include(movie => movie.MovieActor)
+                    .Include(movie => movie.Genre)
                 .Where(movie => movie.MovieId == id).FirstAsync();
             }
 
