@@ -88,7 +88,7 @@ namespace MovieApi.Services
             {
                 Title = movie.Title,
                 Year = movie.Year,
-                Genre = movie.Genre.Name,
+                Genre = movie.Genre != null ? movie.Genre.Name : "Undefined",
                 Duration = movie.Duration
             };
 
@@ -119,7 +119,7 @@ namespace MovieApi.Services
             {
                 Title = movie.Title,
                 Year = movie.Year,
-                Genre = movie.Genre.Name,
+                Genre = movie.Genre != null ?  movie.Genre.Name : "Undefined",
                 Duration = movie.Duration
             };
 
