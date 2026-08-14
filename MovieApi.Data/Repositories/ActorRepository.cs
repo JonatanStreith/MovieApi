@@ -132,6 +132,7 @@ namespace MovieApi.Services
         {
             return new ActorDto()
             {
+                Id = actor.ActorId,
                 Name = actor.Name,
                 BirthYear = actor.BirthYear
             };
@@ -141,6 +142,7 @@ namespace MovieApi.Services
         {
             return new Actor()
             {
+                ActorId = dto.Id,
                 Name = dto.Name,
                 BirthYear = dto.BirthYear
             };
