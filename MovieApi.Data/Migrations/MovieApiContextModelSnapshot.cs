@@ -122,7 +122,10 @@ namespace MovieApi.Data.Migrations
             modelBuilder.Entity("MovieApi.Models.Movie", b =>
                 {
                     b.Property<int>("MovieId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
@@ -139,6 +142,8 @@ namespace MovieApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MovieId");
+
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
 
@@ -399,8 +404,7 @@ namespace MovieApi.Data.Migrations
                 {
                     b.HasOne("MovieApi.Models.Genre", "Genre")
                         .WithMany("Movies")
-                        .HasForeignKey("MovieId")
-                        .IsRequired();
+                        .HasForeignKey("GenreId");
 
                     b.Navigation("Genre");
                 });
