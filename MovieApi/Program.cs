@@ -25,6 +25,15 @@ namespace MovieApi
 
             // Add services to the container.
 
+            builder.Services.AddCors(options => {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                });
+            });
+
             builder.Services.AddScoped<IAppDbContext>(sp => sp.GetRequiredService<MovieApiContext>());
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -109,6 +118,8 @@ namespace MovieApi
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            app.UseCors("AllowFrontend");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
