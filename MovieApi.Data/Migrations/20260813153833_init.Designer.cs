@@ -11,8 +11,8 @@ using MovieApi.Contexts;
 namespace MovieApi.Data.Migrations
 {
     [DbContext(typeof(MovieApiContext))]
-    [Migration("20260706084010_Genre_changes")]
-    partial class Genre_changes
+    [Migration("20260813153833_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,7 +125,10 @@ namespace MovieApi.Data.Migrations
             modelBuilder.Entity("MovieApi.Models.Movie", b =>
                 {
                     b.Property<int>("MovieId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
@@ -142,6 +145,8 @@ namespace MovieApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MovieId");
+
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
 
@@ -402,8 +407,7 @@ namespace MovieApi.Data.Migrations
                 {
                     b.HasOne("MovieApi.Models.Genre", "Genre")
                         .WithMany("Movies")
-                        .HasForeignKey("MovieId")
-                        .IsRequired();
+                        .HasForeignKey("GenreId");
 
                     b.Navigation("Genre");
                 });

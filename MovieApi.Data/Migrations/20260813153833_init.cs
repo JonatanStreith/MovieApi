@@ -7,7 +7,7 @@
 namespace MovieApi.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Genre_changes : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,7 +43,8 @@ namespace MovieApi.Data.Migrations
                 name: "Movies",
                 columns: table => new
                 {
-                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    MovieId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
@@ -53,8 +54,8 @@ namespace MovieApi.Data.Migrations
                 {
                     table.PrimaryKey("PK_Movies", x => x.MovieId);
                     table.ForeignKey(
-                        name: "FK_Movies_Genres_MovieId",
-                        column: x => x.MovieId,
+                        name: "FK_Movies_Genres_GenreId",
+                        column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "GenreId");
                 });
@@ -216,6 +217,11 @@ namespace MovieApi.Data.Migrations
                 name: "IX_MovieActors_MovieId",
                 table: "MovieActors",
                 column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Movies_GenreId",
+                table: "Movies",
+                column: "GenreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_MovieId",

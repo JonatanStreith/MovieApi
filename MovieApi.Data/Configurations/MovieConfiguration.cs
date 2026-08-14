@@ -14,7 +14,7 @@ namespace MovieApi.Configurations
 
             builder.HasOne<Genre>(m => m.Genre)
                     .WithMany(g => g.Movies)
-                    .HasForeignKey(m => m.MovieId)
+                    .HasForeignKey(m => m.GenreId)
                     .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasKey(m => m.MovieId);
