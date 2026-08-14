@@ -19,7 +19,9 @@ namespace MovieApi.Services
 
         public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genreName, int? year)
         {
-            var movies = _context.Movies.AsQueryable();
+            var movies = _context.Movies
+                .Include(movie => movie.Genre)
+                .AsQueryable();
 
             Genre genre = _context.Genres.FirstOrDefault(g => g.Name == genreName);
 
@@ -40,7 +42,9 @@ namespace MovieApi.Services
 
         public async Task<IEnumerable<MovieDto>> GetMoviesAsync(string? genreName, int? year, PagingDto paging)
         {
-            var movies = _context.Movies.AsQueryable();
+            var movies = _context.Movies
+                .Include(movie => movie.Genre)
+                .AsQueryable();
 
             Genre genre = _context.Genres.FirstOrDefault(g => g.Name == genreName);
 
@@ -117,6 +121,7 @@ namespace MovieApi.Services
         {
             var dto = new MovieDto()
             {
+                Id = movie.MovieId,
                 Title = movie.Title,
                 Year = movie.Year,
                 Genre = movie.Genre != null ?  movie.Genre.Name : "Undefined",
@@ -234,6 +239,7 @@ namespace MovieApi.Services
         {
             return new ActorDto()
             {
+                Id = actor.ActorId,
                 Name = actor.Name,
                 BirthYear = actor.BirthYear
             };
@@ -243,6 +249,7 @@ namespace MovieApi.Services
         {
             var movie = new Movie()
             {
+                MovieId = dto.Id,
                 Title = dto.Title,
                 Year = dto.Year,
                 Genre = genre,

@@ -37,7 +37,7 @@ public class MoviesController : ControllerBase
 
     // GET: api/movies
     [HttpGet]
-    [MapToApiVersion("2.0")]        //This ensures it's the one accessed when we use v1.0
+    [MapToApiVersion("2.0")]        //This ensures it's the one accessed when we use v2.0
     public async Task<ActionResult<IEnumerable<MovieDto>>> GetMovies(string? genre, int? year, [FromQuery] PagingDto paging)
     {
         if (paging.PageSize < 10 || paging.PageSize > 100 || paging.Page < 1) return BadRequest("Illegitimate paging parameters.");
@@ -55,14 +55,14 @@ public class MoviesController : ControllerBase
     }
 
     // GET: api/movies/1?fulldata=true
-    [HttpGet("{id}")]
-    public async Task<ActionResult<MovieDto>> GetMovie(int id, bool fullData = false)
+    [HttpGet("{movieId}")]
+    public async Task<ActionResult<MovieDto>> GetMovie(int movieId, bool fullData = false)
     {
-        var movie = await _movieService.GetMovieAsync(id, fullData);
+        var movie = await _movieService.GetMovieAsync(movieId, fullData);
 
         if (movie == null)
         {
-            return NotFound($"The movie with the id {id} couldn't be found.");
+            return NotFound($"The movie with the id {movieId} couldn't be found.");
         }
 
         return Ok(movie);
@@ -93,12 +93,12 @@ public class MoviesController : ControllerBase
 
         if (movie == null) return BadRequest("Movie could not be added; faulty data.");
 
-        return CreatedAtAction("GetMovie", new { id = movie.MovieId }, movie);
+        return Ok();//CreatedAtAction("PostMovie", new { id = movie.MovieId }, movie);
     }
 
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{id}")]
+    [HttpPut("{movieId}")]
     public async Task<ActionResult<bool>> PutMovie(int movieId, MovieUpdateDto movie)
     {
 
@@ -110,7 +110,7 @@ public class MoviesController : ControllerBase
     }
 
     // DELETE: api/movies/5
-    [HttpDelete("{id}")]
+    [HttpDelete("{movieId}")]
     public async Task<ActionResult<bool>> DeleteMovie(int movieId)
     {
         var result = await _movieService.DeleteMovieAsync(movieId);
