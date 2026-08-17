@@ -72,6 +72,7 @@ namespace MovieApi.Services
         {
             return new ReviewDto()
             {
+                Id = review.Id,
                 ReviewerName = review.ReviewerName,
                 Comment = review.Comment,
                 Rating = review.Rating,
