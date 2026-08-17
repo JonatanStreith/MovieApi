@@ -135,6 +135,7 @@ namespace MovieApi.Services
         public async Task<MovieDetails> GetMovieDetailsAsync(int movieId)
         {
             var result = await _context.Movies
+                
                 .Where(movie => movie.MovieId == movieId)
                 .Select(movie => movie.MovieDetails)
                 .FirstAsync();

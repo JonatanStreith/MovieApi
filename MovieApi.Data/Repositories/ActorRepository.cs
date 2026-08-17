@@ -27,6 +27,19 @@ namespace MovieApi.Services
             return actors.Select(actor => ConvertActorToDto(actor));
         }
 
+        public async Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId)
+        {
+
+            var actorIds = await _context.MovieActors.Where(ma => ma.MovieId == movieId).Select(ma => ma.ActorId).ToListAsync();
+
+            var actors = await _context.Actors.Where(a => actorIds.Contains(a.ActorId))
+                .OrderBy(a => a.Name).ToListAsync();
+
+
+            return actors.Select(actor => ConvertActorToDto(actor));
+        }
+
+
         public async Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging)
         {
             return await _context.Actors.OrderBy(a => a.Name)
@@ -151,6 +164,11 @@ namespace MovieApi.Services
         public bool ActorExists(int id)
         {
             return _context.Actors.Any(e => e.ActorId == id);
+        }
+
+        public bool MovieExists(int? movieId)
+        {
+            return _context.Movies.Any(e => e.MovieId == movieId);
         }
 
         public async Task<bool> SaveChangesAsync()

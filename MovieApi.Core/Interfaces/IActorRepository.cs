@@ -22,5 +22,7 @@ namespace MovieApi.Interfaces
         bool ActorExists(int id);
 
         Task<bool> SaveChangesAsync();
+        bool MovieExists(int? movieId);
+        Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId);
     }
 }

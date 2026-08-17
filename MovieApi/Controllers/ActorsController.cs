@@ -68,6 +68,21 @@ namespace MovieApi.Controllers
             return Ok(actor);
         }
 
+        // GET /api/movies/{id}/actors
+        [HttpGet("/api/movies/{movieId}/actors")]
+        public async Task<ActionResult<Actor>> GetMovieActors(int movieId)
+        {
+            if (!_actorService.MovieExists(movieId)) return NotFound($"The movie with the id {movieId} couldn't be found.");
+
+            var actors = await _actorService.GetActorsAsync(movieId);
+
+            if (actors == null)
+            {
+                return NotFound("Actors not found for movie.");
+            }
+
+            return Ok(actors);
+        }
 
         //POST /api/actors
         [HttpPost]

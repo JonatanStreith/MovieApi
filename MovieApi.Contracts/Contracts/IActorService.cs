@@ -14,6 +14,8 @@ namespace MovieApi.Contracts.Contracts
 
         Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging);
 
+        Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId);
+
         Task<ActorDto> GetActorAsync(int id);
 
         Task<Actor> AddActorAsync(ActorDto actorDto);
@@ -25,6 +27,8 @@ namespace MovieApi.Contracts.Contracts
         Task<bool> DeleteActorAsync(int actorId);
 
         bool ActorExists(int id);
+
+        bool MovieExists(int movieId);
 
         Task<bool> SaveChangesAsync();
 

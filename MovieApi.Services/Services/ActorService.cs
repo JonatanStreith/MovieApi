@@ -27,6 +27,10 @@ namespace MovieApi.Services.Services
             return _actors.ActorExists(id);
         }
 
+        public bool MovieExists(int movieId)
+        {
+            return _actors.MovieExists(movieId);
+        }
         public Task<Actor> AddActorAsync(ActorDto actorDto)
         {
             return _actors.AddActorAsync(actorDto);
@@ -50,6 +54,10 @@ namespace MovieApi.Services.Services
         public Task<IEnumerable<ActorDto>> GetActorsAsync()
         {
             return _actors.GetActorsAsync();
+        }
+        public Task<IEnumerable<ActorDto>> GetActorsAsync(int movieId)
+        {
+            return _actors.GetActorsAsync(movieId);
         }
         public Task<IEnumerable<ActorDto>> GetActorsAsync(PagingDto paging)
         {
