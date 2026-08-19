@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,6 @@ using System.Text.Json;
 
 [Route("api/v{version:apiVersion}/movies")]
 [ApiController]
-
 [ApiVersion("1.0")]
 [ApiVersion("2.0")]
 public class MoviesController : ControllerBase
@@ -70,7 +70,7 @@ public class MoviesController : ControllerBase
 
     // GET /api/movies/{id}/details
     [HttpGet("{movieId}/details")]
-    public async Task<ActionResult<Movie>> GetMovieDetails(int movieId)
+        public async Task<ActionResult<Movie>> GetMovieDetails(int movieId)
     {
         if(!_movieService.MovieExists(movieId)) return NotFound($"The movie with the id {movieId} couldn't be found.");
 
@@ -87,18 +87,20 @@ public class MoviesController : ControllerBase
     // POST: api/movies
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Movie>> PostMovie(MovieCreateDto movieCreateDto)
     {
         var movie = await _movieService.AddMovieAsync(movieCreateDto);
 
         if (movie == null) return BadRequest("Movie could not be added; faulty data.");
 
-        return Ok();//CreatedAtAction("PostMovie", new { id = movie.MovieId }, movie);
+        return NoContent();//CreatedAtAction("PostMovie", new { id = movie.MovieId }, movie);
     }
 
     // PUT: api/movies/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{movieId}")]
+    [Authorize]
     public async Task<ActionResult<bool>> PutMovie(int movieId, MovieUpdateDto movie)
     {
 
@@ -111,6 +113,7 @@ public class MoviesController : ControllerBase
 
     // DELETE: api/movies/5
     [HttpDelete("{movieId}")]
+    [Authorize]
     public async Task<ActionResult<bool>> DeleteMovie(int movieId)
     {
         var result = await _movieService.DeleteMovieAsync(movieId);

@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MovieApi.Contracts.Contracts;
@@ -14,7 +15,6 @@ namespace MovieApi.Controllers
 {
     [Route("api/reviews")]
     [ApiController]
-
     [ApiVersion("1.0")]
     [ApiVersion("2.0")]
 
@@ -62,6 +62,7 @@ namespace MovieApi.Controllers
 
         //POST /api/movies/{movieId}/reviews
         [HttpPost("/api/movies/{movieId}/reviews")]
+        [Authorize]
         public async Task<ActionResult<Review>> PostReview(int movieId, ReviewDto reviewDto)
         {
             if (reviewDto == null || reviewDto.MovieId != movieId) return BadRequest("Incomplete or bad data.");
@@ -70,7 +71,7 @@ namespace MovieApi.Controllers
 
             (Review review, Flag flag) = await _reviewService.AddReviewAsync(movieId, reviewDto);
 
-            if (flag == Flag.OK) return CreatedAtAction("PostReview", new { id = review.Id }, review);
+            if (flag == Flag.OK) return NoContent();    //CreatedAtAction("PostReview", new { id = review.Id }, review);
             if (flag == Flag.Too_Many_Reviews) return BadRequest("The maximum number of allowed reviews has been reached already.");
 
             else return BadRequest("Unexpected error.");
@@ -79,6 +80,7 @@ namespace MovieApi.Controllers
 
         //DELETE /api/reviews/{id}
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<bool>> DeleteReview(int id)
         {
             var result = await _reviewService.DeleteReviewAsync(id);
